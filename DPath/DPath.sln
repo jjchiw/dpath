@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPath", "DPath.csproj", "{219BA53E-63E8-4FC5-B481-64D4A348530F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{219BA53E-63E8-4FC5-B481-64D4A348530F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{219BA53E-63E8-4FC5-B481-64D4A348530F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{219BA53E-63E8-4FC5-B481-64D4A348530F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{219BA53E-63E8-4FC5-B481-64D4A348530F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

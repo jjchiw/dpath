@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{219BA53E-63E8-4FC5-B481-64D4A348530F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DPath</RootNamespace>
+    <AssemblyName>DPath</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AsyncCtpLibrary">
+      <HintPath>packages\RavenDB-Client.1.0.701\lib\net40\AsyncCtpLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Nancy">
+      <HintPath>packages\Nancy.0.10.0\lib\net40\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Authentication.Forms">
+      <HintPath>packages\Nancy.Authentication.Forms.0.10.0\lib\net40\Nancy.Authentication.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Hosting.Aspnet">
+      <HintPath>packages\Nancy.Hosting.Aspnet.0.10.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.ViewEngines.Razor">
+      <HintPath>packages\Nancy.Viewengines.Razor.0.10.0\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="NBrowserID">
+      <HintPath>packages\NBrowserID.0.1.0.1\lib\NBrowserID.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Abstractions">
+      <HintPath>packages\RavenDB-Client.1.0.701\lib\net40\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Debug">
+      <HintPath>packages\RavenDB-Client.1.0.701\lib\net40\Raven.Client.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight">
+      <HintPath>packages\RavenDB-Client.1.0.701\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.MvcIntegration">
+      <HintPath>packages\RavenDB-Client.1.0.701\lib\net40\Raven.Client.MvcIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Nancy.Viewengines.Razor.0.10.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\img\glyphicons-halflings.png" />
+    <Content Include="Content\js\libs\bootstrap\alert.js" />
+    <Content Include="Content\js\libs\bootstrap\bootstrap.js" />
+    <Content Include="Content\js\libs\bootstrap\bootstrap.min.js" />
+    <Content Include="Content\js\libs\bootstrap\button.js" />
+    <Content Include="Content\js\libs\bootstrap\carousel.js" />
+    <Content Include="Content\js\libs\bootstrap\collapse.js" />
+    <Content Include="Content\js\libs\bootstrap\dropdown.js" />
+    <Content Include="Content\js\libs\bootstrap\modal.js" />
+    <Content Include="Content\js\libs\bootstrap\popover.js" />
+    <Content Include="Content\js\libs\bootstrap\scrollspy.js" />
+    <Content Include="Content\js\libs\bootstrap\tab.js" />
+    <Content Include="Content\js\libs\bootstrap\tooltip.js" />
+    <Content Include="Content\js\libs\bootstrap\transition.js" />
+    <Content Include="Content\js\libs\bootstrap\typeahead.js" />
+    <Content Include="Content\js\libs\jquery-1.7.1.min.js" />
+    <Content Include="Content\js\libs\less-1.2.1.min.js" />
+    <Content Include="Content\js\libs\modernizr-2.5.3-respond-1.1.0.min.js" />
+    <Content Include="Content\js\script.js" />
+    <Content Include="Content\js\specific\path.index.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\FormsAuthBootstrapper .cs" />
+    <Compile Include="Helpers\GravatarExtensions.cs" />
+    <Compile Include="Helpers\ModuleExtensions.cs" />
+    <Compile Include="Models\Achievement.cs" />
+    <Compile Include="Models\Goal.cs" />
+    <Compile Include="Models\Path.cs" />
+    <Compile Include="Models\Repositories\UserMapper.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ViewModels\PathView.cs" />
+    <Compile Include="Modules\AuthModule.cs" />
+    <Compile Include="Modules\MainModule.cs" />
+    <Compile Include="Modules\PathModule.cs" />
+    <Compile Include="Modules\PathModule.Secured.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\less\bootstrap\accordion.less" />
+    <None Include="Content\less\bootstrap\alerts.less" />
+    <None Include="Content\less\bootstrap\bootstrap.less" />
+    <None Include="Content\less\bootstrap\breadcrumbs.less" />
+    <None Include="Content\less\bootstrap\button-groups.less" />
+    <None Include="Content\less\bootstrap\buttons.less" />
+    <None Include="Content\less\bootstrap\carousel.less" />
+    <None Include="Content\less\bootstrap\close.less" />
+    <None Include="Content\less\bootstrap\code.less" />
+    <None Include="Content\less\bootstrap\component-animations.less" />
+    <None Include="Content\less\bootstrap\dropdowns.less" />
+    <None Include="Content\less\bootstrap\forms.less" />
+    <None Include="Content\less\bootstrap\grid.less" />
+    <None Include="Content\less\bootstrap\hero-unit.less" />
+    <None Include="Content\less\bootstrap\labels.less" />
+    <None Include="Content\less\bootstrap\layouts.less" />
+    <None Include="Content\less\bootstrap\mixins.less" />
+    <None Include="Content\less\bootstrap\modals.less" />
+    <None Include="Content\less\bootstrap\navbar.less" />
+    <None Include="Content\less\bootstrap\navs.less" />
+    <None Include="Content\less\bootstrap\pager.less" />
+    <None Include="Content\less\bootstrap\pagination.less" />
+    <None Include="Content\less\bootstrap\patterns.less" />
+    <None Include="Content\less\bootstrap\popovers.less" />
+    <None Include="Content\less\bootstrap\print.less" />
+    <None Include="Content\less\bootstrap\progress-bars.less" />
+    <None Include="Content\less\bootstrap\reset.less" />
+    <None Include="Content\less\bootstrap\responsive.less" />
+    <None Include="Content\less\bootstrap\scaffolding.less" />
+    <None Include="Content\less\bootstrap\sprites.less" />
+    <None Include="Content\less\bootstrap\tables.less" />
+    <None Include="Content\less\bootstrap\thumbnails.less" />
+    <None Include="Content\less\bootstrap\tooltip.less" />
+    <None Include="Content\less\bootstrap\type.less" />
+    <None Include="Content\less\bootstrap\utilities.less" />
+    <None Include="Content\less\bootstrap\variables.less" />
+    <None Include="Content\less\bootstrap\wells.less" />
+    <None Include="Content\less\style.less" />
+    <None Include="Views\Home.cshtml" />
+    <Content Include="Views\Shared\Layout.cshtml" />
+    <Content Include="Views\Path\Index.cshtml" />
+    <Content Include="Views\Path\MyPaths.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>60800</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>
+xcopy /s /y "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.10.0\BuildProviders\Nancy.ViewEngines.Razor.BuildProviders.dll" "$(ProjectDir)bin"
+xcopy /s /y "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.10.0\lib\Net40\Nancy.ViewEngines.Razor.dll" "$(ProjectDir)bin"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

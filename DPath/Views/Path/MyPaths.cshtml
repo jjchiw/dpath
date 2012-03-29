@@ -1,0 +1,18 @@
+﻿@using DPath.Models.ViewModels
+
+
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+    Layout = "Views/Shared/Layout.cshtml";
+}
+<ul id="ideas">
+    @foreach (PathView m in Model.Paths)
+    {
+        <li>
+            <h3 class="path-name"><a href="/@m.Id">@m.Name</a></h3>
+            <div class="path-oncourse">On Course: @m.TotalOncourse</div>
+            <div class="path-astray">Astray: @m.TotalAstray</div>
+            <div class="clearfix"> </div>
+        </li> 
+    }
+</ul>
