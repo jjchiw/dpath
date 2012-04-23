@@ -4,25 +4,47 @@ using System.Linq;
 using System.Web;
 using Nancy;
 using DPath.Helpers;
+using Raven.Client;
+using DPath.Models;
 
 namespace DPath.Modules
 {
 	public class MainModule : NancyModule
 	{
-		public MainModule()
+		IDocumentStore _documentStore;
+
+		public MainModule(IDocumentStore documentStore)
 		{
+			_documentStore = documentStore;
 			Get["/"] = parameters =>
 			{
-				var m = Context.Model("Home");
+				using (IDocumentSession session = _documentStore.OpenSession())
+				{
+					var m = Context.Model("Home");
+					m.HomeActive = "active";
+					m.Paths = session.Query<Path>()
+									 .ToList()
+									 .Select(x => x.ConvertToPathView())
+									 .OrderByDescending(x => x.DateCreated)
+									 .ToList();
 
-				return View["Views/Home", m];
+					m.RecentPaths = session.Query<Path>()
+									 .ToList()
+									 .Select(x => x.ConvertToPathView())
+									 .OrderByDescending(x => x.LastUpdated)
+									 .ToList();
+
+					return View["Views/Home", m];
+				}
+				
 			};
 
-			Get["/path/{path}"] = parameters =>
+			Get["about"] = parameters =>
 			{
 				var m = Context.Model("Home");
+				m.AboutActive = "active";
+				return View["Views/About", m];
 
-				return "yaya" + parameters.path;
 			};
 		}
 	}

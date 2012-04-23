@@ -10,11 +10,17 @@
         <div class="clearfix" id="path-form">
             <label for="Name">Name</label>
             <div class="input">
-                <input id="path-name" name="Name" type="text" /> <input id="add-path" type="button" class="btn btn-primary" value="save path"/>
+                <input id="path-name" name="Name" type="text" />
             </div>
+			<label for="Description">Description</label>
+            <div class="input">
+				<textarea id="path-description" name="Description" rows="5" cols="150"></textarea>
+            </div>
+			<input id="add-path" type="button" class="btn btn-primary" value="save path"/>
         </div>
 		<div class="clearfix">
-            <label for="Name" id="path-name-saved"></label>
+            <h3><label for="Name" id="path-name-saved"></label></h3>
+			<p><span id="path-description-saved"></span></p>
 			<input type="hidden" id="path-id" />
         </div>
         <div class="clearfix hide" id="goals">
@@ -26,9 +32,9 @@
 
 			<label for="Goals">Goals</label>
 			<div class="clearfix">
-				<ul id="goals-list">
+				<div id="goals-list">
 				
-				</ul>
+				</div>
 			</div>
         </div>
         </form>
@@ -36,4 +42,6 @@
 </div>
 
 @section PageScript {
-    <script type="text/javascript" src="/Content/js/specific/path.index.js"></script>
+	<script src="/Content/js/libs/mustache.js"></script>
+	<script type="text/javascript" src="/Content/js/specific/path.create.js"></script>
+}

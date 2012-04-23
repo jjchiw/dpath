@@ -1,0 +1,44 @@
+﻿@using DPath.Models.ViewModels
+
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+    Layout = "Views/Shared/Layout.cshtml";
+}
+
+<div class="row">
+    <div class="span10">
+        <h2>Edit</h2>
+        <form>
+		<div class="clearfix">
+            <h3>@Model.Path.Name</h3>
+			<input type="hidden" id="path-id" value="@Model.Path.Id"/>
+        </div>
+        <div class="clearfix" id="goals">
+			<label for="Name">Goal</label>
+			<div class="input">
+                <input id="goal-name" name="Goal" type="text" /> <input id="add-goal" type="button" class="btn btn-primary" value="add goal"/>
+            </div>
+			<hr />
+
+			<label for="Goals">Goals</label>
+			<div class="clearfix">
+				<div id="goals-list">
+					@foreach(GoalView goal in Model.Path.Goals)
+					 {
+						 <div class="row">
+							<div class="span8">
+								<pre class="goal">@goal.Name</pre>
+							</div>
+						</div>
+					 }
+				</div>
+			</div>
+        </div>
+        </form>
+    </div>
+</div>
+
+@section PageScript {
+	<script src="/Content/js/libs/mustache.js"></script>
+    <script type="text/javascript" src="/Content/js/specific/path.edit.js"></script>
+}

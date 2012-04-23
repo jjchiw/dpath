@@ -5,14 +5,18 @@
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
-<ul id="ideas">
-    @foreach (PathView m in Model.Paths)
-    {
-        <li>
-            <h3 class="path-name"><a href="/@m.Id">@m.Name</a></h3>
-            <div class="path-oncourse">On Course: @m.TotalOncourse</div>
-            <div class="path-astray">Astray: @m.TotalAstray</div>
-            <div class="clearfix"> </div>
-        </li> 
-    }
-</ul>
+
+@foreach (PathView m in Model.Paths)
+	{
+		
+		<div class="row">
+			<div class="span8">
+				<pre class="goal"><a href="/@m.Id">@m.Name</a></pre>
+				<blockquote>@m.Description</blockquote>
+			</div>
+			<div class="span4 pull-right">
+				<div class="alert alert-error pull-right"> @m.TotalAstray</div>
+				<div class="alert alert-success pull-right">@m.TotalOncourse</div>
+			</div>
+		</div>	
+	}

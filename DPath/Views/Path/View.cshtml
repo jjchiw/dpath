@@ -1,0 +1,125 @@
+﻿@using DPath.Models.ViewModels
+@using System.Linq;
+
+
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+    Layout = "Views/Shared/Layout.cshtml";
+}
+
+<h2>@Model.Path.Name
+@if(Model.IsOwner)
+{
+	<a href="/@Model.Path.Id/edit">Edit</a>
+}
+</h2>
+
+<form>
+<input type="hidden" id="path-id" value="@Model.Path.Id" />
+@foreach (GoalView m in Model.Path.Goals)
+{
+
+	<div class="row">
+		<div class="span8">
+			<pre class="goal">@m.Name <a href="#" id="view-goal-@m.Id"> / more...</a></pre>
+		</div>
+		<div class="span4 pull-right">
+			<div class="alert alert-error pull-right"> 
+				<span id="astray-count-@m.Id">@m.Achievements.Count(x => x.Resolution == DPath.Models.Resolution.Astray.ToString())</span>
+				@if (Model.IsLoggedIn)
+				{
+					<a href="#" id="add-astray-link-@m.Id">astray</a> 
+				}
+			</div>
+			<div class="alert alert-success pull-right"> 
+				<span id="on-course-count-@m.Id">@m.Achievements.Count(x => x.Resolution == DPath.Models.Resolution.OnCourse.ToString())</span> 
+				@if (Model.IsLoggedIn)
+				{
+					<a href="#" id="add-on-course-link-@m.Id">on course</a>
+				}
+			</div>
+		</div>
+	</div>	
+	 
+	<div class="row">
+		<div class="span6">
+			<h4>Achievements</h4>
+			@if (Model.IsLoggedIn)
+   {
+
+   }	
+		</div>
+	</div>	
+	<div class="row">
+		@{
+   var lastAstray = @m.Achievements.OrderByDescending(x => x.DateCreated).FirstOrDefault(x => x.Resolution == DPath.Models.Resolution.Astray.ToString());
+   var lastOnCourse = @m.Achievements.OrderByDescending(x => x.DateCreated).FirstOrDefault(x => x.Resolution == DPath.Models.Resolution.OnCourse.ToString());
+
+		<div id="last-oncourse-@m.Id" class="span6">
+			@if (@lastOnCourse != null)
+   { 
+				<div class="alert alert-success container-fluid">
+					<div class="row-fluid">
+						<div class="span2">
+							<img src="@lastOnCourse.GravatarUrl" />
+						</div>
+						<div class="span10">
+							<div class="row">
+								<div class="span5">
+									@lastOnCourse.UserName
+								</div>
+								<div class="span5">
+									<span class="pull-right">@lastOnCourse.PrettyDate</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="span10">
+									<p>@lastOnCourse.Comment</p>
+								</div>
+							</div>
+					
+						</div>
+					</div>
+				</div>
+   }
+		</div>
+
+		<div id="last-astray-@m.Id" class="span6">
+			@if (@lastAstray != null)
+   { 
+				<div class="alert alert-error container-fluid">
+					<div class="row-fluid">
+						<div class="span2">
+							<img src="@lastAstray.GravatarUrl" />
+						</div>
+						<div class="span10">
+							<div class="row">
+								<div class="span5">
+									@lastAstray.UserName
+								</div>
+								<div class="span5">
+									<span class="pull-right">@lastAstray.PrettyDate</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="span10">
+									<p>@lastAstray.Comment</p>
+								</div>
+							</div>
+					
+						</div>
+					</div>
+				</div>
+   }
+		</div>
+		}
+		</div>
+
+}
+</form>
+@section PageScript {
+	<script src="/Content/js/libs/mustache.js"></script>
+    <script type="text/javascript" src="/Content/js/specific/path.view.js"></script>
+	<script type="text/javascript" src="/Content/js/libs/bootstrap/modal.js"></script>
+	<script type="text/javascript" src="/Content/js/libs/bootstrap/tab.js"></script>
+}

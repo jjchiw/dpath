@@ -111,8 +111,12 @@
     <Content Include="Content\js\libs\jquery-1.7.1.min.js" />
     <Content Include="Content\js\libs\less-1.2.1.min.js" />
     <Content Include="Content\js\libs\modernizr-2.5.3-respond-1.1.0.min.js" />
+    <Content Include="Content\js\libs\mustache.js" />
     <Content Include="Content\js\script.js" />
-    <Content Include="Content\js\specific\path.index.js" />
+    <Content Include="Content\js\specific\layout.js" />
+    <Content Include="Content\js\specific\path.create.js" />
+    <Content Include="Content\js\specific\path.edit.js" />
+    <Content Include="Content\js\specific\path.view.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -123,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\FormsAuthBootstrapper .cs" />
+    <Compile Include="Helpers\FriendlyTimeHelper.cs" />
     <Compile Include="Helpers\GravatarExtensions.cs" />
     <Compile Include="Helpers\ModuleExtensions.cs" />
     <Compile Include="Models\Achievement.cs" />
@@ -130,17 +135,28 @@
     <Compile Include="Models\Path.cs" />
     <Compile Include="Models\Repositories\UserMapper.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\ViewModels\PathView.cs" />
+    <Compile Include="Models\ViewModels\AchievementView.cs" />
+    <Compile Include="Models\ViewModels\GoalView.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\ViewModels\PathView.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Modules\AuthModule.cs" />
     <Compile Include="Modules\MainModule.cs" />
     <Compile Include="Modules\PathModule.cs" />
     <Compile Include="Modules\PathModule.Secured.cs" />
+    <Compile Include="Modules\UserModule.Secured.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\js\templates\achievement.add.mustache" />
+    <None Include="Content\js\templates\achievement.view.mustache" />
+    <None Include="Content\js\templates\achievement.load.mustache" />
+    <None Include="Content\js\templates\goal.add.mustache" />
     <None Include="Content\less\bootstrap\accordion.less" />
     <None Include="Content\less\bootstrap\alerts.less" />
     <None Include="Content\less\bootstrap\bootstrap.less" />
@@ -179,10 +195,14 @@
     <None Include="Content\less\bootstrap\variables.less" />
     <None Include="Content\less\bootstrap\wells.less" />
     <None Include="Content\less\style.less" />
+    <Content Include="Views\About.cshtml" />
     <None Include="Views\Home.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
-    <Content Include="Views\Path\Index.cshtml" />
+    <None Include="Views\Path\Create.cshtml" />
     <Content Include="Views\Path\MyPaths.cshtml" />
+    <Content Include="Views\Path\View.cshtml" />
+    <Content Include="Views\Path\Edit.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

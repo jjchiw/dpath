@@ -1,0 +1,23 @@
+﻿@using DPath.Models.ViewModels
+
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+    Layout = "Views/Shared/Layout.cshtml";
+}
+
+<div class="row">
+    <div class="span10">
+        <h2>Edit</h2>
+        <form action="/User" method="post">
+		<div class="clearfix">
+            <h3>Account</h3>
+        </div>
+        <div class="clearfix" id="goals">
+			<label for="Username">Username</label>
+			<div class="input">
+                <input id="username" name="Username" type="text" value="@Model.UserName"/> <input id="add-goal" type="submit" class="btn btn-primary" value="save"/>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>

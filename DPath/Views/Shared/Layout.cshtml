@@ -41,13 +41,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Project name</a>
+          <a class="brand" href="#">D. Path</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="/paths/create">New Path</a></li>
-              <li><a href="/paths/my-paths">My Paths</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+			  <li class="@Model.HomeActive"><a href="/">Home</a></li>
+              <li class="@Model.NewPathActive"><a href="/paths/create">New Path</a></li>
+              <li class="@Model.MyPathsActive"><a href="/paths/my-paths">My Paths</a></li>
+              <li class="@Model.AboutActive"><a href="/about">About</a></li>
             </ul>
 
 			<div id="login" class="@loginCssClass pull-right loggedin">
@@ -61,6 +61,7 @@
 					<li class="dropdown">
 						 <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="min-width:160px;"><img id="user-gravatar" alt="Gravatar"/> <span id="username"></span></a>
 						<ul class="dropdown-menu">
+							<li><a href="/User/">Edit</a></li>
 							<li><a id="logout" href="#logout">Logout</a></li>
 						</ul>
 					</li> 
@@ -72,14 +73,14 @@
       </div>
     </div>
 
-    <div class="container">
+    <div id="container" class="container">
 		@RenderBody()
      
 
       <hr>
 
       <footer>
-        <p>&copy; Company 2012</p>
+        <p>&copy; La Calabaza @DateTime.Now.Year</p>
       </footer>
 
     </div> <!-- /container -->
@@ -103,11 +104,12 @@
 		} (document, 'script'));
 	</script>
 
+<script language="javascript" src="/Content/js/specific/layout.js"></script>
 <script language="javascript">
 	$(document).ready(function () {
 
 		if ("@Model.IsLoggedIn" === "True") {
-			setDisplayStyle("@Model.Email");
+			setDisplayStyle("@Model.Email", "@Model.UserName");
 		}
 
 		$('#login').click(function () {
@@ -126,58 +128,9 @@
 				}
 			});
 		});
-
-		if (navigator.id && navigator.id.sessions && navigator.id.sessions.length > 0) {
-			setDisplayStyle(navigator.id.sessions);
-		}
 	});
 
-	function setSession(val) {
-		if (navigator.id) {
-			navigator.id.sessions = val ? val : [];
-		}
-	}
 
-	// a handler that is passed an assertion after the user logs in via the
-	// browserid dialog
-	function gotVerifiedEmail(assertion) {
-		// got an assertion, now send it up to the server for verification
-		if (assertion !== null) {
-			$.ajax({
-				type: 'POST',
-				url: '/auths/login',
-				data: { assertion: assertion },
-				success: function (res, status, xhr) {
-					if (res != null) {
-						loggedIn(res.email);
-					}
-				},
-				error: function (res, status, xhr) {
-					alert("login failure" + res);
-				}
-			});
-		}
-	}
-
-	function loggedIn(email) {
-		setSession(email);
-		$('#login').toggleClass().removeClass('show').addClass('hide');
-		$('#loggedinview').removeClass('hide').addClass('show');
-		setDisplayStyle(email);
-	}
-
-	function setDisplayStyle(email) {
-		var iurl = 'http://www.gravatar.com/avatar/' + Crypto.MD5($.trim(email).toLowerCase()) + "?s=20";
-		$("#user-gravatar").attr("src", iurl);
-		$("#username").text(email);
-	}
-
-	function logout() {
-		setSession();
-		$('#login').removeClass('hide').addClass('show');
-		$('#loggedinview').removeClass('show').addClass('hide');
-		$('#gravatar').html('');
-	}
 </script>
 
 @RenderSection("PageScript", false)

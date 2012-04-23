@@ -7,14 +7,14 @@ namespace DPath.Models
 {
 	public class Goal
 	{
+		public string Id { get; set; }
 		public string Name { get; set; }
-		public List<Achievement> OnCourse { get; set; }
-		public List<Achievement> Astray { get; set; }
+		public List<Achievement> Achievements { get; set; }
 
 		public Goal()
 		{
-			OnCourse = new List<Achievement>();
-			Astray = new List<Achievement>();
+			Id = null;
+			Achievements = new List<Achievement>();
 		}
 	}
 }
