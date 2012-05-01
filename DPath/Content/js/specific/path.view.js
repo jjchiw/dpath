@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-	var postAchievement = function (goalId, comment, resolution) {
+	var postAchievement = function (goalId, comment, resolution, commentTemplateName) {
 		var url = "/" + $("#path-id").val() + "/goal/" + goalId + "/" + resolution;
 
 		$.post(url, { "comment": comment }, function (data) {
@@ -20,7 +20,7 @@
 			});
 
 			if (comment != "")
-				$("#comment-" + goalId).val("");
+				$(commentTemplateName + goalId).val("");
 
 		});
 	};
@@ -29,37 +29,68 @@
 		var goalId = $(this).attr("id").replace("add-oncourse-", "");
 		var comment = $("#comment-" + goalId).val();
 
-		postAchievement(goalId, comment, "oncourse");
+		postAchievement(goalId, comment, "oncourse", "#comment-");
 
-		return true;
+		return false;
 	});
 
 	$('a[id^="add-astray"]').live("click", function () {
 		var goalId = $(this).attr("id").replace("add-astray-", "");
 		var comment = $("#comment-" + goalId).val();
 
-		postAchievement(goalId, comment, "astray");
+		postAchievement(goalId, comment, "astray", "#comment-");
 
-		return true;
+		return false;
 	});
 
 	$('a[id^="add-astray-link-"]').live("click", function () {
 		var goalId = $(this).attr("id").replace("add-astray-link-", "");
-		var comment = "";
+		var comment = $("#dynamic-comment-astray-goal-" + goalId).val();
 
-		postAchievement(goalId, comment, "astray");
+		postAchievement(goalId, comment, "astray", "#dynamic-comment-astray-goal-");
 
-		return true;
+		$("#add-astray-div-" + goalId).addClass("hidden");
+
+		return false;
 	});
 
 
 	$('a[id^="add-on-course-link-"]').live("click", function () {
 		var goalId = $(this).attr("id").replace("add-on-course-link-", "");
-		var comment = "";
+		var comment = $("#dynamic-comment-on-course-goal-" + goalId).val();
 
-		postAchievement(goalId, comment, "oncourse");
+		postAchievement(goalId, comment, "oncourse", "#dynamic-comment-on-course-goal-");
 
-		return true;
+		$("#add-on-course-div-" + goalId).addClass("hidden");
+
+		return false;
+	});
+
+	$('a[id^="show-astray-link-"]').live("click", function () {
+		var goalId = $(this).attr("id").replace("show-astray-link-", "");
+
+		$('div[id^="add-on-course-div-"].dynamic-form-goal').addClass("hidden");
+		$('div[id^="add-astray-div-"].dynamic-form-goal').addClass("hidden");
+
+		$("#add-astray-div-" + goalId).removeClass("hidden");
+
+		$('#dynamic-comment-astray-goal-' + goalId).focus();
+
+		return false;
+	});
+
+
+	$('a[id^="show-on-course-link-"]').live("click", function () {
+		var goalId = $(this).attr("id").replace("show-on-course-link-", "");
+
+		$('div[id^="add-on-course-div-"].dynamic-form-goal').addClass("hidden");
+		$('div[id^="add-astray-div-"].dynamic-form-goal').addClass("hidden");
+
+		$("#add-on-course-div-" + goalId).removeClass("hidden");
+
+		$('#dynamic-comment-on-course-goal-' + goalId).focus();
+
+		return false;
 	});
 
 	$('a[id^="view-goal"]').click(function () {
@@ -72,7 +103,6 @@
 		$.get(url, function (data, status) {
 			//data is the AchievementView object
 			//data is the AchievementView object
-			console.log(status);
 			$.get("/Content/js/templates/achievement.view.mustache", function (template) {
 				var achievement = Mustache.render(template, data);
 				$("#container").append(achievement);
@@ -81,9 +111,6 @@
 				var page = 1;
 				var loading = false;
 				$("#view-goal").scroll(function () {
-					console.log($("#view-goal").scrollTop() >= $("#view-goal").height() * page);
-					console.log($("#view-goal").height());
-					console.log(page);
 					if ($("#view-goal").scrollTop() >= $("#view-goal").height() * page) {
 						if (loading == false) {
 							loading = true;
@@ -126,7 +153,7 @@
 			});
 		});
 
-		return true;
+		return false;
 	});
 
 	var characters = 255;
@@ -138,6 +165,20 @@
 		$("#counter").html(remaining);
 	});
 
-	//if((($(window).scrollTop()+$(window).height())+250)>=$(document).height()){
+	$(document).keypress(function (e) {
+		if (e.keyCode == 13) {
+			var textAreas = $('textarea[id^="dynamic-comment-on-course-goal-"]:focus');
+			if (textAreas.length > 0) {
+				var goalId = textAreas[0].id.replace("dynamic-comment-on-course-goal-", "");
+				$("#add-on-course-link-" + goalId).click();
+			}
+
+			textAreas = $('textarea[id^="dynamic-comment-astray-goal-"]:focus');
+			if (textAreas.length > 0) {
+				var goalId = textAreas[0].id.replace("dynamic-comment-astray-goal-", "");
+				$("#add-astray-link-" + goalId).click();
+			}
+		}
+	});
 
 });

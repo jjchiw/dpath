@@ -21,5 +21,9 @@ namespace DPath.Models.ViewModels
 		public DateTime LastUpdated { get; set; }
 
 		public string PrettyLastUpdatedDate { get; set; }
+
+		public string UserName { get; set; }
+
+		public int TotalUsersInPath { get; set; }
 	}
 }

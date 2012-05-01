@@ -4,12 +4,10 @@
 			"description": $("#path-description").val()
 		}, function (data) {
 			//data is the path object
-			$("#goals").toggle();
-			$("#path-form").toggle();
-			$("#path-name-saved").html(data.name);
-			$("#path-description-saved").html(data.description);
 			$("#path-id").val(data.id);
 
+
+			window.location = window.location.origin + "/" + data.id + "/edit";
 
 		});
 	});

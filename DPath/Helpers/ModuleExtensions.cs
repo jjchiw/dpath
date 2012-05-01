@@ -7,6 +7,7 @@ using System.Dynamic;
 using Nancy.Authentication.Forms;
 using DPath.Models;
 using DPath.Models.ViewModels;
+using Raven.Client;
 
 namespace DPath.Helpers
 {
@@ -57,11 +58,13 @@ namespace DPath.Helpers
 				Description = path.Description,
 				TotalOncourse = path.Goals.Sum(y => y.Achievements.Where(x => x.Resolution == Resolution.OnCourse).Count()),
 				TotalAstray = path.Goals.Sum(y => y.Achievements.Where(x => x.Resolution == Resolution.Astray).Count()),
-				Goals = path.Goals.Select(y => y.ConvertToGoalView()).ToList(),
+				Goals = path.Goals.OrderBy(x => x.Order).Select(y => y.ConvertToGoalView()).ToList(),
 				DateCreated = path.DateCreated,
 				PrettyDate = path.DateCreated.FriendlyParse(),
 				LastUpdated = path.LastUpdated,
-				PrettyLastUpdatedDate = path.LastUpdated.FriendlyParse()
+				PrettyLastUpdatedDate = path.LastUpdated.FriendlyParse(),
+				UserName = path.User.UserName,
+				TotalUsersInPath = path.Goals.Sum(x => x.Achievements.Select(y => y.User.Guid).Distinct().Count())
 			};
 		}
 
@@ -72,6 +75,7 @@ namespace DPath.Helpers
 				Id = goal.Id,
 				Name = goal.Name,
 				Achievements = goal.Achievements.Select(y => y.ConverToAchievementView()).OrderByDescending(x => x.DateCreated).ToList(),
+				TotalUsersInGoal = goal.Achievements.Select(y => y.User.Guid).Distinct().Count()
 			};
 		}
 
@@ -87,6 +91,13 @@ namespace DPath.Helpers
 				Resolution = achievement.Resolution.ToString(),
 				PrettyDate = achievement.DateCreated.FriendlyParse()
 			};
+		}
+
+		public static Path GetPath(this NancyModule module, dynamic parameters, IDocumentSession session)
+		{
+			var pathId = String.Format("{0}/{1}", module.ModulePath, parameters.id.Value as string);
+			var path = session.Load<Path>(pathId);
+			return path;
 		}
 	}
 }

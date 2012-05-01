@@ -27,38 +27,7 @@ namespace DPath.Modules
 				return View["Path/Create", m];
 			};
 
-			Get["/{id}/edit"] = parameters =>
-			{
-				using (IDocumentSession session = _documentStore.OpenSession())
-				{
-					Path path = GetPath(parameters, session);
-					if (path == null)
-						return new Response { StatusCode = HttpStatusCode.NotFound };
-
-					var m = Context.Model("Edit");
-					m.Path = path.ConvertToPathView();
-					m.NewPathActive = "active";
-					return View["Path/Edit", m];
-				}
-			};
-
-			Post["/{id}/edit"] = parameters =>
-			{
-				using (IDocumentSession session = _documentStore.OpenSession())
-				{
-					Path path = GetPath(parameters, session);
-					if (path == null)
-						return new Response { StatusCode = HttpStatusCode.NotFound };
-
-					path.Name = Request.Form.name;
-					path.Description = Request.Form.description;
-
-					session.Store(path);
-					session.SaveChanges();
-
-					return Response.AsJson(new { name = path.Name, id = path.Id, description = path.Description });
-				}
-			};
+			
 
 			Post["/create"] = _ =>
 			{
@@ -70,7 +39,8 @@ namespace DPath.Modules
 						Description = Request.Form.description,
 						User = (Context.CurrentUser as User),
 						DateCreated = DateTime.UtcNow,
-						LastUpdated = DateTime.UtcNow
+						LastUpdated = DateTime.UtcNow,
+						SubscribedUsers = new List<string> { (Context.CurrentUser as User).Id }
 					};
 
 					session.Store(path);
@@ -84,7 +54,7 @@ namespace DPath.Modules
 			{
 				using (IDocumentSession session = _documentStore.OpenSession())
 				{
-					Path path = GetPath(parameters, session);
+					Path path = this.GetPath(parameters as DynamicDictionary, session);
 					if (path == null)
 						return new Response { StatusCode = HttpStatusCode.NotFound };
 					
@@ -94,7 +64,8 @@ namespace DPath.Modules
 					var goal = new Goal
 					{
 						Id = Guid.NewGuid().ToString(),
-						Name = Request.Form.name
+						Name = Request.Form.name,
+						Order = path.Goals.Count
 					};
 
 					path.LastUpdated = DateTime.UtcNow;
@@ -103,7 +74,7 @@ namespace DPath.Modules
 					session.Store(path);
 					session.SaveChanges();
 
-					return Response.AsJson(new { Name = goal.Name });
+					return Response.AsJson(new { Name = goal.Name, Id = goal.Id });
 				}
 			};
 
@@ -111,9 +82,16 @@ namespace DPath.Modules
 			{
 				using (IDocumentSession session = _documentStore.OpenSession())
 				{
-					Path path = GetPath(parameters, session);
+					Path path = this.GetPath(parameters as DynamicDictionary, session);
 					if (path == null)
 						return new Response { StatusCode = HttpStatusCode.NotFound };
+
+					if (path.SubscribedUsers == null)
+						path.SubscribedUsers = new List<string>();
+
+					var isSubscribed = path.SubscribedUsers.SingleOrDefault(x => x == (Context.CurrentUser as User).Id);
+					if (isSubscribed == null)
+						path.SubscribedUsers.Add((Context.CurrentUser as User).Id);
 
 					var goalId = parameters.goalId.Value as string;
 					var resolution = parameters.resolution.Value as string;
@@ -137,6 +115,7 @@ namespace DPath.Modules
 					goal.Achievements.Add(achievement);
 					
 					session.Store(goal);
+					session.Store(path);
 					session.SaveChanges();
 
 					var achievementView = achievement.ConverToAchievementView();
@@ -152,9 +131,9 @@ namespace DPath.Modules
 				using (IDocumentSession session = _documentStore.OpenSession())
 				{
 					var userId = (Context.CurrentUser as User).Id;
-					var pathsWithCustomer = session.Query<Path>().Customize(x => x.Include<User>(y => y.Id))
-																 .Where(x => x.User.Id == userId)
-																 .OrderByDescending(x => x.LastUpdated);
+
+					var pathsWithCustomer = session.Advanced.LuceneQuery<Path>()
+															.Where(string.Format("SubscribedUsers:({0})", userId));
 
 					var results = new List<PathView>(); // Prepare our results list
 					foreach (var path in pathsWithCustomer)
@@ -170,15 +149,5 @@ namespace DPath.Modules
 				}
 			};
 		}
-
-		private Path GetPath(dynamic parameters, IDocumentSession session)
-		{
-			var pathId = String.Format("{0}/{1}", ModulePath, parameters.id.Value as string);
-			var path = session.Load<Path>(pathId);
-			return path;
-		}
-
-		
-		
 	}
 }

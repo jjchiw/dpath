@@ -4,122 +4,193 @@
 
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 @{
-    Layout = "Views/Shared/Layout.cshtml";
+	Layout = "Views/Shared/Layout.cshtml";
 }
 
-<h2>@Model.Path.Name
-@if(Model.IsOwner)
-{
-	<a href="/@Model.Path.Id/edit">Edit</a>
-}
-</h2>
+<div class="path-hero-unit">
+	<h5>
+	@if (Model.IsOwner)
+	{
+		<a id="path-delete" href="#" class="btn btn-danger"><i class="icon-trash"></i> Delete</a>
+		<a href="/@Model.Path.Id/edit" class="btn"><i class="icon-pencil"></i> Edit</a>
+	}
+	</h5>
+	<h1>
+		@Model.Path.Name
+	</h1>
+	<h5>
+		by @Model.Path.UserName
+	</h5>
+	<p>@Model.Path.Description</p>
+</div>
 
 <form>
 <input type="hidden" id="path-id" value="@Model.Path.Id" />
 @foreach (GoalView m in Model.Path.Goals)
 {
-
-	<div class="row">
-		<div class="span8">
-			<pre class="goal">@m.Name <a href="#" id="view-goal-@m.Id"> / more...</a></pre>
-		</div>
-		<div class="span4 pull-right">
-			<div class="alert alert-error pull-right"> 
-				<span id="astray-count-@m.Id">@m.Achievements.Count(x => x.Resolution == DPath.Models.Resolution.Astray.ToString())</span>
-				@if (Model.IsLoggedIn)
-				{
-					<a href="#" id="add-astray-link-@m.Id">astray</a> 
-				}
-			</div>
-			<div class="alert alert-success pull-right"> 
-				<span id="on-course-count-@m.Id">@m.Achievements.Count(x => x.Resolution == DPath.Models.Resolution.OnCourse.ToString())</span> 
-				@if (Model.IsLoggedIn)
-				{
-					<a href="#" id="add-on-course-link-@m.Id">on course</a>
-				}
-			</div>
-		</div>
-	</div>	
-	 
-	<div class="row">
-		<div class="span6">
-			<h4>Achievements</h4>
-			@if (Model.IsLoggedIn)
-   {
-
-   }	
-		</div>
-	</div>	
-	<div class="row">
-		@{
-   var lastAstray = @m.Achievements.OrderByDescending(x => x.DateCreated).FirstOrDefault(x => x.Resolution == DPath.Models.Resolution.Astray.ToString());
-   var lastOnCourse = @m.Achievements.OrderByDescending(x => x.DateCreated).FirstOrDefault(x => x.Resolution == DPath.Models.Resolution.OnCourse.ToString());
-
-		<div id="last-oncourse-@m.Id" class="span6">
-			@if (@lastOnCourse != null)
-   { 
-				<div class="alert alert-success container-fluid">
-					<div class="row-fluid">
-						<div class="span2">
-							<img src="@lastOnCourse.GravatarUrl" />
-						</div>
-						<div class="span10">
-							<div class="row">
-								<div class="span5">
-									@lastOnCourse.UserName
-								</div>
-								<div class="span5">
-									<span class="pull-right">@lastOnCourse.PrettyDate</span>
-								</div>
+	
+	<div class="row path">
+		<div class="span12">
+			<div class="span2">
+				<div class="alert alert-success path-count">
+					<strong>
+						<span id="on-course-count-@m.Id">@m.Achievements.Count(x => x.Resolution == DPath.Models.Resolution.OnCourse.ToString())</span> 
+						@if (Model.IsLoggedIn)
+	  {
+							
+							<a href="#" id="show-on-course-link-@m.Id">on course</a>
+	  }
+					</strong>
+						@if (Model.IsLoggedIn)
+	  {
+							
+							<div id="add-on-course-div-@m.Id" class="dynamic-form-goal hidden">
+								<textarea rows="5" cols="10" placeholder="Because I..." id="dynamic-comment-on-course-goal-@m.Id"></textarea>
+								<a id="add-on-course-link-@m.Id" class="btn btn-primary" href="">Ok</a>
 							</div>
-							<div class="row">
-								<div class="span10">
-									<p>@lastOnCourse.Comment</p>
-								</div>
+	  }
+				</div>
+				<div class="alert alert-error path-count">
+					<strong>
+						<span id="astray-count-@m.Id">@m.Achievements.Count(x => x.Resolution == DPath.Models.Resolution.Astray.ToString())</span>
+					@if (Model.IsLoggedIn)
+	 {
+							
+							<a href="#" id="show-astray-link-@m.Id">astray</a>
+	 }
+					</strong>
+						@if (Model.IsLoggedIn)
+	  {
+							
+							<div id="add-astray-div-@m.Id" class="dynamic-form-goal hidden">
+								<textarea rows="5" cols="10" placeholder="Because I..." id="dynamic-comment-astray-goal-@m.Id"></textarea>
+								<a id="add-astray-link-@m.Id" class="btn btn-primary" href="">Ok</a>
 							</div>
-					
-						</div>
+	  }
+				</div>
+				<div class="row inner-path-row">
+					<div class="span1">
+						<h4>@m.TotalUsersInGoal user(s) in this goal</h4>
 					</div>
 				</div>
-   }
-		</div>
+			</div>
+			<div class="span8">
+				<h1><a href="#" id="view-goal-@m.Id">@m.Name</a></h1>
+				<div class="row inner-path-row">
+				
+					@{
+	  var lastAstray = @m.Achievements.OrderByDescending(x => x.DateCreated).FirstOrDefault(x => x.Resolution == DPath.Models.Resolution.Astray.ToString());
+	  var lastOnCourse = @m.Achievements.OrderByDescending(x => x.DateCreated).FirstOrDefault(x => x.Resolution == DPath.Models.Resolution.OnCourse.ToString());
 
-		<div id="last-astray-@m.Id" class="span6">
-			@if (@lastAstray != null)
-   { 
-				<div class="alert alert-error container-fluid">
-					<div class="row-fluid">
-						<div class="span2">
-							<img src="@lastAstray.GravatarUrl" />
-						</div>
-						<div class="span10">
-							<div class="row">
-								<div class="span5">
-									@lastAstray.UserName
-								</div>
-								<div class="span5">
-									<span class="pull-right">@lastAstray.PrettyDate</span>
+						<div id="last-oncourse-@m.Id" class="span4">
+						@if (@lastOnCourse != null)
+	  { 
+							<div class="alert alert-success container-fluid">
+								<div class="row-fluid">
+									<div class="span2">
+										<img src="@lastOnCourse.GravatarUrl" />
+									</div>
+									<div class="span10">
+										<div class="row">
+											<div class="span5">
+												@lastOnCourse.UserName
+											</div>
+											<div class="span4">
+												<span class="pull-right">@lastOnCourse.PrettyDate</span>
+											</div>
+										</div>
+										<div class="row">
+											<div class="span10">
+												<p>@lastOnCourse.Comment</p>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-							<div class="row">
-								<div class="span10">
-									<p>@lastAstray.Comment</p>
+	  }
+	  else
+	  {
+							<div class="alert alert-info container-fluid">
+								<div class="row-fluid">
+									<div class="span2">
+									</div>
+									<div class="span10">
+										<div class="row">
+											<div class="span5">
+											</div>
+											<div class="span4">
+											</div>
+										</div>
+										<div class="row">
+											<div class="span10">
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-					
+	  }
 						</div>
-					</div>
+
+						<div id="last-astray-@m.Id" class="span4">
+						@if (@lastAstray != null)
+	  { 
+							<div class="alert alert-error container-fluid">
+								<div class="row-fluid">
+									<div class="span2">
+										<img src="@lastAstray.GravatarUrl" />
+									</div>
+									<div class="span10">
+										<div class="row">
+											<div class="span5">
+												@lastAstray.UserName
+											</div>
+											<div class="span4">
+												<span class="pull-right">@lastAstray.PrettyDate</span>
+											</div>
+										</div>
+										<div class="row">
+											<div class="span10">
+												<p>@lastAstray.Comment</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+	  }
+	  else
+	  {
+							<div class="alert alert-info container-fluid">
+								<div class="row-fluid">
+									<div class="span2">
+									</div>
+									<div class="span10">
+										<div class="row">
+											<div class="span5">
+											</div>
+											<div class="span4">
+											</div>
+										</div>
+										<div class="row">
+											<div class="span10">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+	  }
+						</div>
+					}
+				
 				</div>
-   }
+			</div>
 		</div>
-		}
-		</div>
-
+	</div>
 }
 </form>
 @section PageScript {
 	<script src="/Content/js/libs/mustache.js"></script>
     <script type="text/javascript" src="/Content/js/specific/path.view.js"></script>
+    <script type="text/javascript" src="/Content/js/specific/path.js"></script>
 	<script type="text/javascript" src="/Content/js/libs/bootstrap/modal.js"></script>
 	<script type="text/javascript" src="/Content/js/libs/bootstrap/tab.js"></script>
 }

@@ -2,17 +2,42 @@
 
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 @{
-    Layout = "Views/Shared/Layout.cshtml";
+	Layout = "Views/Shared/Layout.cshtml";
 }
+
+
+<div class="path-hero-unit">
+	<div id="path-information">
+		<a id="path-delete" href="#" class="btn btn-danger"><i class="icon-trash"></i> Delete</a>
+		<a id="path-edit" href="#" class="btn"><i class="icon-pencil"></i> Edit</a>
+		<a href="/@Model.Path.Id" class="btn"><i class="icon-eye-open"></i>View</a>
+
+		 <h1 id="path-name">@Model.Path.Name</h1>
+		<h5>
+			by @Model.Path.UserName
+		</h5>
+		<p id="path-description">@Model.Path.Description</p>
+	</div>
+
+	 <div id="path-edit-div" class="hidden">
+		<label for="Name">Name</label>
+        <div class="input">
+            <input id="path-edit-name-text" name="Name" type="text" />
+        </div>
+		<label for="Description">Description</label>
+        <div class="input">
+			<textarea id="path-edit-description-text" name="Description" rows="5" cols="150"></textarea>
+        </div>
+		<input id="path-edit-button" type="button" class="btn btn-primary" value="update path"/>
+		<input id="path-cancel-button" type="button" class="btn btn-inverse" value="cancel"/>
+
+	</div>
+
+	<input type="hidden" id="path-id" value="@Model.Path.Id" />
+</div>
 
 <div class="row">
     <div class="span10">
-        <h2>Edit</h2>
-        <form>
-		<div class="clearfix">
-            <h3>@Model.Path.Name</h3>
-			<input type="hidden" id="path-id" value="@Model.Path.Id"/>
-        </div>
         <div class="clearfix" id="goals">
 			<label for="Name">Goal</label>
 			<div class="input">
@@ -22,23 +47,30 @@
 
 			<label for="Goals">Goals</label>
 			<div class="clearfix">
-				<div id="goals-list">
-					@foreach(GoalView goal in Model.Path.Goals)
-					 {
-						 <div class="row">
-							<div class="span8">
-								<pre class="goal">@goal.Name</pre>
-							</div>
-						</div>
-					 }
-				</div>
+				<ul id="goals-list" class="sortable">
+					@foreach (GoalView goal in Model.Path.Goals)
+	 {
+						<li id="goal-id-@goal.Id">
+							<i class="icon-resize-vertical"></i> 
+							<a id="goal-delete-@goal.Id" href="#" class="btn btn-danger"><i class="icon-trash"></i></a>
+							<a id="goal-edit-@goal.Id" href="#" class="btn"><i class="icon-pencil"></i></a>
+							<a id="goal-name-@goal.Id" href="#" class="no-link">@goal.Name</a>
+						</li>
+						<li id="goal-edit-form-@goal.Id" class="hidden">
+							<input type="text" id="goal-edit-text-@goal.Id"/>
+							<input id="goal-edit-button-@goal.Id" type="button" class="btn btn-primary" value="update goal"/> 
+							<input id="goal-cancel-button-@goal.Id" type="button" class="btn btn-inverse" value="cancel"/>
+						</li>
+	 }
+				</ul>
 			</div>
         </div>
-        </form>
     </div>
 </div>
 
 @section PageScript {
-	<script src="/Content/js/libs/mustache.js"></script>
-    <script type="text/javascript" src="/Content/js/specific/path.edit.js"></script>
+	<script type="text/javascript" src="/Content/js/libs/mustache.js"></script>
+	<script type="text/javascript" src="/Content/js/libs/jquery-ui-1.8.19.custom.min.js"></script>
+	<script type="text/javascript" src="/Content/js/specific/path.edit.js"></script>
+	<script type="text/javascript" src="/Content/js/specific/path.js"></script>
 }

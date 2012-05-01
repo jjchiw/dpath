@@ -11,6 +11,8 @@ namespace DPath.Models
 		public string Id { get; set; }
 		public Guid Guid { get; set; }
 		public string Email { get; set; }
+
+		public string Token { get; set; }
 		
 		#region IUserIdentity Members
 

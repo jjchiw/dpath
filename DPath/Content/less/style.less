@@ -22,8 +22,72 @@ textarea{
 
 pre{
 	line-height: 10px;
+	&.goal{
+		font-size: 16px;
+		#font > #family > .serif;
+	}
 }
 
+div{
+	&.path{
+		margin-top: 30px;
+		margin-left: 0px;
+		border-bottom-color: lightBlue;
+		border-bottom-width: 1px;
+		border-bottom-style: double;
+	}
+
+	&.inner-path-row{
+		margin-bottom: 20px;
+	}
+
+	&.path-count{
+		text-align: center;
+		padding-left: 27px;
+	}
+
+	&.dynamic-form-goal{
+		position: relative;
+	}
+}
+
+.path-hero-unit {
+  padding: 15px;
+  margin-bottom: 30px;
+  background-color: #f5f5f5;
+  .border-radius(6px);
+  h1 {
+    margin-bottom: 0;
+    font-size: 60px;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  p {
+    font-size: 18px;
+    font-weight: 200;
+    line-height: @baseLineHeight * 1.5;
+  }
+}
+
+.sortable{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 60%;
+
+	li {
+		margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px;
+
+		span{
+			position: absolute; margin-left: -1.3em;
+		}
+	}
+}
+
+.no-link{
+	cursor: default;
+	text-decoration: none;
+}
 
 
 

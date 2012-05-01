@@ -37,6 +37,7 @@ namespace DPath.Helpers
 			container.Register<IUserMapper, UserMapper>();
 		}
 
+		
 		protected override void RequestStartup(TinyIoCContainer requestContainer, IPipelines pipelines, NancyContext context)
 		{
 			// At request startup we modify the request pipelines to

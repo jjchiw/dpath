@@ -14,6 +14,7 @@ namespace DPath.Models
 		public  User User { get; set; }
 		public DateTime DateCreated { get; set; }
 		public DateTime LastUpdated { get; set; }
+		public List<string> SubscribedUsers { get; set; }
 
 		public Path()
 		{

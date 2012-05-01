@@ -92,8 +92,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\img\glyphicons-halflings-white.png" />
-    <Content Include="Content\img\glyphicons-halflings.png" />
+    <Content Include="Content\js\libs\jquery-ui-1.8.19.custom.min.js" />
+    <Content Include="Content\js\specific\path.js" />
+    <Content Include="Content\less\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\less\img\glyphicons-halflings.png" />
     <Content Include="Content\js\libs\bootstrap\alert.js" />
     <Content Include="Content\js\libs\bootstrap\bootstrap.js" />
     <Content Include="Content\js\libs\bootstrap\bootstrap.min.js" />
@@ -145,6 +147,7 @@
     <Compile Include="Modules\AuthModule.cs" />
     <Compile Include="Modules\MainModule.cs" />
     <Compile Include="Modules\PathModule.cs" />
+    <Compile Include="Modules\PathModule.Mine.Secured.cs" />
     <Compile Include="Modules\PathModule.Secured.cs" />
     <Compile Include="Modules\UserModule.Secured.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
