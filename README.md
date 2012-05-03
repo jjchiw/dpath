@@ -14,12 +14,16 @@ Roadmap
 * Mobiles applications (ios, android, wp7)
 * Prizes (Gamification)
 
-Working with
-===
-[@jluna79](https://twitter.com/#!/jluna79), [@honupo](https://twitter.com/#!/honupo)
-
 Using
 ===
 [nancy](http://nancyfx.org/), [ravendb](http://ravendb.net),  [mustache.js](http://mustache.github.com/)
 
 *Is not online yet but it'll be on AppHarbor*
+
+Made by La Calabaza
+
+![La Calabaza](https://github.com/jjchiw/dpath/raw/master/calabaza.png "La Calabaza")
+
+Thanks to
+===
+[@jluna79](https://twitter.com/#!/jluna79), [@honupo](https://twitter.com/#!/honupo)
