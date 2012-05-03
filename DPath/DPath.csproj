@@ -119,6 +119,7 @@
     <Content Include="Content\js\specific\path.create.js" />
     <Content Include="Content\js\specific\path.edit.js" />
     <Content Include="Content\js\specific\path.view.js" />
+    <EmbeddedResource Include="favicon.ico" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
