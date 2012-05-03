@@ -1,3 +1,4 @@
+# Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
 [Oo]bj
 [Bb]in
 [Pp]ackages
@@ -11,3 +12,6 @@
 [Tt]humbs.db 
 _ReSharper.*
 *.resharper
+
+# mstest test results
+TestResults
