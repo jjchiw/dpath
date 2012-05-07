@@ -13,35 +13,57 @@ namespace DPath.Modules
 	public class UserModule : NancyModule
 	{
 		private IDocumentStore _documentStore;
+        private IDocumentSession _session;
 
 		public UserModule(IDocumentStore documentStore) : base("User")
 		{
 			this.RequiresAuthentication();
 
+            Before.AddItemToEndOfPipeline(ctx =>
+            {
+                _session = _documentStore.OpenSession();
+                return null;
+            });
+
+            After.AddItemToEndOfPipeline(ctx =>
+            {
+                if(_session != null)
+                    _session.Dispose();
+            });
+
 			_documentStore = documentStore;
 
 			Post["/"] = parameter =>
 			{
-				using (var session = documentStore.OpenSession())
-				{
-					var user = session	.Query<User>()
-										.SingleOrDefault(x => x.Email == Context.UserEmail());
+				var user = (Context.CurrentUser as User);
 
-					user.UserName = Request.Form.Username;
+                user.UserName = Request.Form.Username;
 
-					session.Store(user);
-					session.SaveChanges();
+				_session.Store(user);
+				_session.SaveChanges();
 
-					Context.CurrentUser = user;
+				Context.CurrentUser = user;
 
-					var m = Context.Model("Edit User");
-					return View["User/Edit", m];
-				}
+				var m = Context.Model("Edit User");
+				return View["User/Edit", m];
 			};
+
+            Post["/token"] = parameter =>
+            {
+                var user = (Context.CurrentUser as User);
+
+                user.Token = new Random().Next(1, 10).ToString();
+
+                _session.Store(user);
+                _session.SaveChanges();
+                    
+                return Response.AsJson(new {Token = user.Token}, HttpStatusCode.OK );
+            };
 
 			Get["/"] = parameter =>
 			{
 				var m = Context.Model("Edit User");
+                m.Token = (Context.CurrentUser as User).Token;
 				return View["User/Edit", m];
 			};
 

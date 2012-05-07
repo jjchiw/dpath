@@ -8,6 +8,7 @@ using DPath.Helpers;
 using Raven.Client;
 using DPath.Models;
 using DPath.Models.ViewModels;
+using DPath.Tasks;
 
 namespace DPath.Modules
 {
@@ -54,7 +55,7 @@ namespace DPath.Modules
 			{
 				using (IDocumentSession session = _documentStore.OpenSession())
 				{
-					Path path = this.GetPath(parameters as DynamicDictionary, session);
+                    Path path = PathTasks.GetPath(this, parameters as DynamicDictionary, session);
 					if (path == null)
 						return new Response { StatusCode = HttpStatusCode.NotFound };
 					
@@ -82,41 +83,13 @@ namespace DPath.Modules
 			{
 				using (IDocumentSession session = _documentStore.OpenSession())
 				{
-					Path path = this.GetPath(parameters as DynamicDictionary, session);
-					if (path == null)
-						return new Response { StatusCode = HttpStatusCode.NotFound };
+                    var result = PathTasks.AddResolution(this, parameters, session, (Context.CurrentUser as User), Request.Form.comment);
 
-					if (path.SubscribedUsers == null)
-						path.SubscribedUsers = new List<string>();
+                    if (result == null)
+                        return HttpStatusCode.NotFound;
 
-					var isSubscribed = path.SubscribedUsers.SingleOrDefault(x => x == (Context.CurrentUser as User).Id);
-					if (isSubscribed == null)
-						path.SubscribedUsers.Add((Context.CurrentUser as User).Id);
-
-					var goalId = parameters.goalId.Value as string;
-					var resolution = parameters.resolution.Value as string;
-
-					var goal = path.Goals.SingleOrDefault(x => x.Id == goalId);
-
-					var enumResolution = Resolution.OnCourse;
-					if (resolution == "astray")
-						enumResolution = Resolution.Astray;
-
-					var achievement = new Achievement
-					{
-						Id = Guid.NewGuid().ToString(),
-						Comment = Request.Form.comment,
-						User = (Context.CurrentUser as User),
-						DateCreated = DateTime.UtcNow,
-						Resolution = enumResolution
-					};
-
-					path.LastUpdated = DateTime.UtcNow;
-					goal.Achievements.Add(achievement);
-					
-					session.Store(goal);
-					session.Store(path);
-					session.SaveChanges();
+                    var achievement = result.Achievement as Achievement;
+                    var goal = result.Goal as Goal;
 
 					var achievementView = achievement.ConverToAchievementView();
 					var astrayCount = goal.Achievements.Count(x => x.Resolution == Resolution.Astray);

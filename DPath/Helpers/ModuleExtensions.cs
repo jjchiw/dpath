@@ -49,7 +49,7 @@ namespace DPath.Helpers
 			return model;
 		}
 
-		public static PathView ConvertToPathView(this Path path)
+		public static PathView ConvertToPathView(this Path path, string userId = "", bool justMyAchievements = false)
 		{
 			return new PathView
 			{
@@ -68,13 +68,19 @@ namespace DPath.Helpers
 			};
 		}
 
-		public static GoalView ConvertToGoalView(this Goal goal)
+        public static GoalView ConvertToGoalView(this Goal goal, string userId = "", bool justMyAchievements = false)
 		{
+            List<AchievementView> achievements;
+            if(justMyAchievements)
+                achievements = goal.Achievements.Where(x => x.User.Id == userId)
+                                                .Select(y => y.ConverToAchievementView()).OrderByDescending(x => x.DateCreated).ToList();
+            else
+                achievements = goal.Achievements.Select(y => y.ConverToAchievementView()).OrderByDescending(x => x.DateCreated).ToList();
 			return new GoalView
 			{
 				Id = goal.Id,
 				Name = goal.Name,
-				Achievements = goal.Achievements.Select(y => y.ConverToAchievementView()).OrderByDescending(x => x.DateCreated).ToList(),
+                Achievements = achievements,
 				TotalUsersInGoal = goal.Achievements.Select(y => y.User.Guid).Distinct().Count()
 			};
 		}
@@ -93,11 +99,14 @@ namespace DPath.Helpers
 			};
 		}
 
-		public static Path GetPath(this NancyModule module, dynamic parameters, IDocumentSession session)
-		{
-			var pathId = String.Format("{0}/{1}", module.ModulePath, parameters.id.Value as string);
-			var path = session.Load<Path>(pathId);
-			return path;
-		}
+        public static UserView ConverToUserView(this User user)
+        {
+            return new UserView
+            {
+                Email = user.Email,
+                Token = user.Token,
+                UserName = user.UserName
+            };
+        }
 	}
 }

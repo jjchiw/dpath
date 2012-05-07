@@ -7,6 +7,7 @@ using Raven.Client;
 using DPath.Models;
 using DPath.Helpers;
 using Nancy.Security;
+using DPath.Tasks;
 
 namespace DPath.Modules
 {
@@ -26,7 +27,7 @@ namespace DPath.Modules
 			{
 				_session = _documentStore.OpenSession();
 				
-				_path = this.GetPath(ctx.Parameters as DynamicDictionary, _session);
+				_path = PathTasks.GetPath(this, ctx.Parameters as DynamicDictionary, _session);
 				if (_path.User.Email != ctx.UserEmail())
 				{
 					_session.Dispose();

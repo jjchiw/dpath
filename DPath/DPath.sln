@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Web Developer Express 11
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPath", "DPath.csproj", "{219BA53E-63E8-4FC5-B481-64D4A348530F}"
 EndProject
 Global
