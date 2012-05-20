@@ -11,26 +11,20 @@ using DPath.Tasks;
 
 namespace DPath.Modules
 {
-	public class PathModuleMineSecured : NancyModule
+	public class PathModuleMineSecured : RavenModule
 	{
-		private IDocumentStore _documentStore;
-		private IDocumentSession _session;
 		private Path _path;
 
-		public PathModuleMineSecured(IDocumentStore documentStore): base("paths")
+		public PathModuleMineSecured(): base("paths")
 		{
 			this.RequiresAuthentication();
 
-			_documentStore = documentStore;
-
 			this.Before.AddItemToEndOfPipeline(ctx =>
-			{
-				_session = _documentStore.OpenSession();
-				
-				_path = PathTasks.GetPath(this, ctx.Parameters as DynamicDictionary, _session);
+			{	
+				_path = PathTasks.GetPath(this, ctx.Parameters as DynamicDictionary, RavenSession);
 				if (_path.User.Email != ctx.UserEmail())
 				{
-					_session.Dispose();
+					RavenSession.Dispose();
 					return HttpStatusCode.Unauthorized;
 				}
 					
@@ -40,8 +34,8 @@ namespace DPath.Modules
 
 			this.After.AddItemToEndOfPipeline(ctx =>
 			{
-				if(_session != null)
-					_session.Dispose();
+				if(RavenSession != null)
+					RavenSession.Dispose();
 			});
 
 
@@ -58,8 +52,7 @@ namespace DPath.Modules
 				_path.Name = Request.Form.Name;
 				_path.Description = Request.Form.Description;
 
-				_session.Store(_path);
-				_session.SaveChanges();
+				RavenSession.Store(_path);
 
 				return Response.AsJson(new { name = _path.Name, id = _path.Id, description = _path.Description });
 			};
@@ -71,9 +64,7 @@ namespace DPath.Modules
 				
 				_path.Goals.SingleOrDefault(x => x.Id == goalId).Name = newName;
 
-				_session.Store(_path);
-				_session.SaveChanges();
-
+				RavenSession.Store(_path);
 
 				return new Response { StatusCode = HttpStatusCode.OK };
 			};
@@ -110,18 +101,14 @@ namespace DPath.Modules
 
 				_path.Goals.SingleOrDefault(x => x.Id == goalId).Order = newOrder;
 
-				_session.Store(_path);
-				_session.SaveChanges();
-
+				RavenSession.Store(_path);
 
 				return new Response { StatusCode = HttpStatusCode.OK };
 			};
 
 			Post["/{id}/delete"] = parameters =>
 			{
-				_session.Delete<Path>(_path);
-				_session.SaveChanges();
-
+				RavenSession.Delete<Path>(_path);
 				return HttpStatusCode.OK;
 			};
 
@@ -134,8 +121,6 @@ namespace DPath.Modules
 					return HttpStatusCode.NotFound;
 
 				_path.Goals.Remove(goal);
-
-				_session.SaveChanges();
 
 				return HttpStatusCode.OK;
 

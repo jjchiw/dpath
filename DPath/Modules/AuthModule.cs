@@ -12,9 +12,9 @@ using System.Text;
 
 namespace DPath.Modules
 {
-	public class AuthModule : NancyModule
+	public class AuthModule : RavenModule
 	{
-		public AuthModule(IDocumentStore documentStore) : base ("auths")
+		public AuthModule() : base ("auths")
 		{
 			Post["/login"] = parameters =>
 			{
@@ -24,25 +24,20 @@ namespace DPath.Modules
 				{
 					string email = verificationResult.Email;
 					User user = null;
-					using (IDocumentSession session = documentStore.OpenSession())
-					{
-						user = session.Query<User>()
+
+					user = RavenSession.Query<User>()
 								.FirstOrDefault(x => x.Email == email);
 
-						if (user == null)
+					if (user == null)
+					{
+						user = new User
 						{
-							user = new User
-							{
-								Email = email,
-								UserName = email,
-								Guid = Guid.NewGuid()
-							};
+							Email = email,
+							UserName = email,
+							Guid = Guid.NewGuid()
+						};
 
-							session.Store(user);
-							session.SaveChanges();
-						}
-
-						
+						RavenSession.Store(user);
 					}
 
 					//FormsAuthentication.UserLoggedInResponse(user.Guid, DateTime.Now.AddDays(7));

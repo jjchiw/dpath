@@ -9,33 +9,28 @@ using DPath.Models;
 
 namespace DPath.Modules
 {
-	public class MainModule : NancyModule
+	public class MainModule : RavenModule
 	{
-		IDocumentStore _documentStore;
-
-		public MainModule(IDocumentStore documentStore)
+		
+		public MainModule()
 		{
-			_documentStore = documentStore;
 			Get["/"] = parameters =>
 			{
-				using (IDocumentSession session = _documentStore.OpenSession())
-				{
-					var m = Context.Model("Home");
-					m.HomeActive = "active";
-					m.Paths = session.Query<Path>()
-									 .ToList()
-									 .Select(x => x.ConvertToPathView())
-									 .OrderByDescending(x => x.DateCreated)
-									 .ToList();
+				var m = Context.Model("Home");
+				m.HomeActive = "active";
+				m.Paths = RavenSession.Query<Path>()
+									.ToList()
+									.Select(x => x.ConvertToPathView())
+									.OrderByDescending(x => x.DateCreated)
+									.ToList();
 
-					m.RecentPaths = session.Query<Path>()
-									 .ToList()
-									 .Select(x => x.ConvertToPathView())
-									 .OrderByDescending(x => x.LastUpdated)
-									 .ToList();
+				m.RecentPaths = RavenSession.Query<Path>()
+									.ToList()
+									.Select(x => x.ConvertToPathView())
+									.OrderByDescending(x => x.LastUpdated)
+									.ToList();
 
-					return View["Views/Home", m];
-				}
+				return View["Views/Home", m];
 				
 			};
 

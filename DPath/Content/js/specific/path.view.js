@@ -25,24 +25,6 @@
 		});
 	};
 
-	$('a[id^="add-oncourse"]').live("click", function () {
-		var goalId = $(this).attr("id").replace("add-oncourse-", "");
-		var comment = $("#comment-" + goalId).val();
-
-		postAchievement(goalId, comment, "oncourse", "#comment-");
-
-		return false;
-	});
-
-	$('a[id^="add-astray"]').live("click", function () {
-		var goalId = $(this).attr("id").replace("add-astray-", "");
-		var comment = $("#comment-" + goalId).val();
-
-		postAchievement(goalId, comment, "astray", "#comment-");
-
-		return false;
-	});
-
 	$('a[id^="add-astray-link-"]').live("click", function () {
 		var goalId = $(this).attr("id").replace("add-astray-link-", "");
 		var comment = $("#dynamic-comment-astray-goal-" + goalId).val();

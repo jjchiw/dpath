@@ -147,7 +147,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\FormsAuthBootstrapper.cs" />
+    <Compile Include="Helpers\DPathBootstrapper.cs" />
     <Compile Include="Helpers\FriendlyTimeHelper.cs" />
     <Compile Include="Helpers\GravatarExtensions.cs" />
     <Compile Include="Helpers\ModuleExtensions.cs" />
@@ -170,6 +170,7 @@
     <Compile Include="Modules\PathModule.cs" />
     <Compile Include="Modules\PathModule.Mine.Secured.cs" />
     <Compile Include="Modules\PathModule.Secured.cs" />
+    <Compile Include="Modules\RavenModule.cs" />
     <Compile Include="Modules\UserModule.Secured.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\PathTasks.cs" />
@@ -245,8 +246,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>60800</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/DPath</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

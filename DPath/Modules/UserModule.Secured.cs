@@ -10,28 +10,11 @@ using DPath.Helpers;
 
 namespace DPath.Modules
 {
-	public class UserModule : NancyModule
+	public class UserModule : RavenModule
 	{
-		private IDocumentStore _documentStore;
-        private IDocumentSession _session;
-
-		public UserModule(IDocumentStore documentStore) : base("User")
+		public UserModule() : base("User")
 		{
 			this.RequiresAuthentication();
-
-            Before.AddItemToEndOfPipeline(ctx =>
-            {
-                _session = _documentStore.OpenSession();
-                return null;
-            });
-
-            After.AddItemToEndOfPipeline(ctx =>
-            {
-                if(_session != null)
-                    _session.Dispose();
-            });
-
-			_documentStore = documentStore;
 
 			Post["/"] = parameter =>
 			{
@@ -39,8 +22,7 @@ namespace DPath.Modules
 
                 user.UserName = Request.Form.Username;
 
-				_session.Store(user);
-				_session.SaveChanges();
+				RavenSession.Store(user);
 
 				Context.CurrentUser = user;
 
@@ -54,8 +36,7 @@ namespace DPath.Modules
 
                 user.Token = new Random().Next(1, 10).ToString();
 
-                _session.Store(user);
-                _session.SaveChanges();
+				RavenSession.Store(user);
                     
                 return Response.AsJson(new {Token = user.Token}, HttpStatusCode.OK );
             };
