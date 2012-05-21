@@ -56,9 +56,9 @@ namespace DPath.Helpers
 			{
 				//Url = "http://thousandsunny:8080"
 #if DEBUG
-	ConnectionStringName = "RaveDB"
+	ConnectionStringName = "RavenDB"
 #else
-				ConnectionStringName = "RaveDB"
+				ConnectionStringName = "RavenDB"
 #endif
 			};
 			documentStore.Initialize();
