@@ -19,15 +19,17 @@ namespace DPath.Modules
 				var m = Context.Model("Home");
 				m.HomeActive = "active";
 				m.Paths = RavenSession.Query<Path>()
-									.ToList()
-									.Select(x => x.ConvertToPathView())
-									.OrderByDescending(x => x.DateCreated)
-									.ToList();
+									  .Take(10)
+									  .OrderByDescending(x => x.DateCreated)
+									  .ToList()
+									  .Select(x => x.ConvertToPathView())
+				                      .ToList();
 
 				m.RecentPaths = RavenSession.Query<Path>()
+									.Take(10)
+									.OrderByDescending(x => x.LastUpdated)
 									.ToList()
 									.Select(x => x.ConvertToPathView())
-									.OrderByDescending(x => x.LastUpdated)
 									.ToList();
 
 				return View["Views/Home", m];

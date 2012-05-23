@@ -225,9 +225,9 @@
     <None Include="Content\less\bootstrap\variables.less" />
     <None Include="Content\less\bootstrap\wells.less" />
     <None Include="Content\less\style.less" />
-    <None Include="Views\Home.cshtml" />
+    <Content Include="Views\Home.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
-    <None Include="Views\Path\Create.cshtml" />
+    <Content Include="Views\Path\Create.cshtml" />
     <Content Include="Views\Path\MyPaths.cshtml" />
     <Content Include="Views\Path\View.cshtml" />
     <Content Include="Views\Path\Edit.cshtml" />

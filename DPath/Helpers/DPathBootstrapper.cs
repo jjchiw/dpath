@@ -54,12 +54,6 @@ namespace DPath.Helpers
 			// As this is now per-request we could inject a request scoped
 			// database "context" or other request scoped services.
 
-#if DEBUG
-			var documentStore = new DocumentStore
-			{
-				ConnectionStringName = "RavenDBLocal"
-			};
-#else
 			var parser = ConnectionStringParser<RavenConnectionStringOptions>.FromConnectionStringName("RavenDB");
 			parser.Parse();
 
@@ -68,8 +62,6 @@ namespace DPath.Helpers
 				ApiKey = parser.ConnectionStringOptions.ApiKey,
 				Url = parser.ConnectionStringOptions.Url
 			};
-
-#endif
 			
 			documentStore.Initialize();
 
