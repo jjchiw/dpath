@@ -21,7 +21,7 @@ Using
 ===
 [nancy](http://nancyfx.org/), [ravendb](http://ravendb.net),  [mustache.js](http://mustache.github.com/)
 
-*Is not online yet but it'll be on AppHarbor*
+[Dpath in appharbor](http://dpath.apphb.com)
 
 Made by La Calabaza
 
