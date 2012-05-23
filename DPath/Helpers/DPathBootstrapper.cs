@@ -11,6 +11,7 @@ using Raven.Client;
 using DPath.Models.Repositories;
 using Nancy.ViewEngines;
 using System.Configuration;
+using Raven.Abstractions.Data;
 
 namespace DPath.Helpers
 {
@@ -52,18 +53,25 @@ namespace DPath.Helpers
 			// Here we register our user mapper as a per-request singleton.
 			// As this is now per-request we could inject a request scoped
 			// database "context" or other request scoped services.
+
+#if DEBUG
 			var documentStore = new DocumentStore
 			{
-				//Url = "http://thousandsunny:8080"
-#if DEBUG
-	ConnectionStringName = "RavenDB"
-#else
-				ConnectionStringName = "RavenDB"
-#endif
+				ConnectionStringName = "RavenDBLocal"
 			};
+#else
+			var parser = ConnectionStringParser<RavenConnectionStringOptions>.FromConnectionStringName("RavenDB");
+			parser.Parse();
+
+			var documentStore = new DocumentStore
+			{
+				ApiKey = parser.ConnectionStringOptions.ApiKey,
+				Url = parser.ConnectionStringOptions.Url
+			};
+
+#endif
+			
 			documentStore.Initialize();
-
-
 
 			container.Register<IDocumentStore>(documentStore);
 			container.Register<IUserMapper, UserMapper>();
