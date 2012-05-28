@@ -98,7 +98,7 @@ namespace DPath.Helpers
 
 			nancyConventions.StaticContentsConventions.Add((context, path) =>
 			{
-				StaticContentConventionBuilder.AddDirectory("Content/js/templates/", null, new[] { "mustache" });
+				StaticContentConventionBuilder.AddDirectory("/Content/js/templates/", "/Content/js/templates/", new[] { "mustache" });
 
 				return null;
 			});
