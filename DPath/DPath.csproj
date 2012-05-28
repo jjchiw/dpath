@@ -185,11 +185,11 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\js\templates\achievement.add.mustache" />
-    <None Include="Content\js\templates\achievement.view.mustache" />
-    <None Include="Content\js\templates\achievement.load.mustache" />
-    <None Include="Content\js\templates\goal.add.mustache" />
+    <None Include="Content\js\templates\achievement_add.mustache" />
+    <None Include="Content\js\templates\achievement_load.mustache" />
+    <None Include="Content\js\templates\achievement_view.mustache" />
     <Content Include="Views\About.cshtml" />
+    <None Include="Content\js\templates\goal_add.mustache" />
     <None Include="Content\less\bootstrap\accordion.less" />
     <None Include="Content\less\bootstrap\alerts.less" />
     <None Include="Content\less\bootstrap\bootstrap.less" />

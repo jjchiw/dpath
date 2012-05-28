@@ -100,7 +100,7 @@ namespace DPath.Helpers
 			{
 				StaticContentConventionBuilder.AddDirectory("Content/js/templates/", null, new[] { "mustache" });
 
-				return HttpStatusCode.OK;
+				return null;
 			});
 		}
 	}
