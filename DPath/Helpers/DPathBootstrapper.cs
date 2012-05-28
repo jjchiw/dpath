@@ -12,6 +12,7 @@ using DPath.Models.Repositories;
 using Nancy.ViewEngines;
 using System.Configuration;
 using Raven.Abstractions.Data;
+using Nancy.Conventions;
 
 namespace DPath.Helpers
 {
@@ -89,6 +90,18 @@ namespace DPath.Helpers
 
 			FormsAuthentication.Enable(pipelines, formsAuthConfiguration);
 
+		}
+
+		protected override void ConfigureConventions(Nancy.Conventions.NancyConventions nancyConventions)
+		{
+			base.ConfigureConventions(nancyConventions);
+
+			nancyConventions.StaticContentsConventions.Add((context, path) =>
+			{
+				StaticContentConventionBuilder.AddDirectory("Content/js/templates/", null, new[] { "mustache" });
+
+				return HttpStatusCode.OK;
+			});
 		}
 	}
 }
