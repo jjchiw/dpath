@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Nancy.Security;
+using DPath.Models.Helpers;
 
 namespace DPath.Models
 {
-	public class User : IUserIdentity
+	public class User : IUserIdentity, IUserDenormalized
 	{
 		public string Id { get; set; }
 		public Guid Guid { get; set; }

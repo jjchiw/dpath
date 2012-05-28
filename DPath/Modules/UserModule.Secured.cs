@@ -7,6 +7,7 @@ using Nancy.Security;
 using Raven.Client;
 using DPath.Models;
 using DPath.Helpers;
+using DPath.Tasks;
 
 namespace DPath.Modules
 {
@@ -26,8 +27,9 @@ namespace DPath.Modules
 
 				Context.CurrentUser = user;
 
-				var m = Context.Model("Edit User");
-				return View["User/Edit", m];
+				UpdateUserDenormalizedTask.Execute(user);
+
+				return Response.AsRedirect("/User/");
 			};
 
             Post["/token"] = parameter =>

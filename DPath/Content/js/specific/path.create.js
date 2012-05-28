@@ -5,9 +5,7 @@
 		}, function (data) {
 			//data is the path object
 			$("#path-id").val(data.id);
-
-
-			window.location = window.location.origin + "/" + data.id + "/edit";
+			window.location = "/" + data.id + "/edit";
 
 		});
 	});

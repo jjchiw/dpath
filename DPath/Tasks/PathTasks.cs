@@ -18,6 +18,7 @@ namespace DPath.Tasks
             pathId = pathId.Replace("api/", "");
 
             var path = session.Load<Path>(pathId);
+
             return path;
         }
 
