@@ -142,7 +142,7 @@
     <Content Include="Content\js\templates\achievement.add.mustache.js" />
     <Content Include="Content\js\templates\achievement.load.mustache.js" />
     <Content Include="Content\js\templates\achievement.view.mustache.js" />
-    <Content Include="Content\js\templates\goal.add.mustache.js" />
+    <Content Include="Content\js\templates\goal.add.mustache.html" />
     <Content Include="Content\less\img\calabaza.png" />
     <Content Include="Content\less\img\glyphicons-halflings-white.png" />
     <Content Include="Content\less\img\glyphicons-halflings.png" />
