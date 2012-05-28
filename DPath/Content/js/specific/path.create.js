@@ -16,7 +16,7 @@
 		var url = "/" + $("#path-id").val() + "/add-goal";
 		$.post(url, { "name": $("#goal-name").val() }, function (data) {
 			//data is the path object
-			$.get("/Content/js/templates/goal.add.mustache", function (template) {
+			$.get("/Content/js/templates/goal_add.mustache", function (template) {
 				var template = Mustache.render(template, data);
 				$("#goals-list").prepend(template);
 				$("#goal-name").val("");

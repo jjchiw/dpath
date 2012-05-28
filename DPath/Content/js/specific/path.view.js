@@ -5,7 +5,7 @@
 
 		$.post(url, { "comment": comment }, function (data) {
 			//data is the AchievementView object
-			$.get("/Content/js/templates/achievement.add.mustache", function (template) {
+			$.get("/Content/js/templates/achievement_add.mustache", function (template) {
 				var achievement = Mustache.render(template, data.AchievementView);
 				$("#all-list").prepend(achievement);
 				$("#my-list").prepend(achievement);
@@ -85,7 +85,7 @@
 		$.get(url, function (data, status) {
 			//data is the AchievementView object
 			//data is the AchievementView object
-			$.get("/Content/js/templates/achievement.view.mustache", function (template) {
+			$.get("/Content/js/templates/achievement_view.mustache", function (template) {
 				var achievement = Mustache.render(template, data);
 				$("#container").append(achievement);
 				$('#view-goal').modal('show');
@@ -99,7 +99,7 @@
 							console.log("like loading");
 							var urls = urlPattern + "/" + page;
 							$.get(urls, function (data, status) {
-								$.get("/Content/js/templates/achievement.load.mustache", function (template) {
+								$.get("/Content/js/templates/achievement_load.mustache", function (template) {
 									var gList = { list: data.m.AllAchievements }
 									var list = Mustache.render(template, gList);
 									$("#all-list").append(list);
