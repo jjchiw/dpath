@@ -88,6 +88,7 @@ namespace DPath.Helpers
 				};
 
 			FormsAuthentication.Enable(pipelines, formsAuthConfiguration);
+
 		}
 	}
 }
