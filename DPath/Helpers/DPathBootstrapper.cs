@@ -91,17 +91,5 @@ namespace DPath.Helpers
 			FormsAuthentication.Enable(pipelines, formsAuthConfiguration);
 
 		}
-
-		protected override void ConfigureConventions(Nancy.Conventions.NancyConventions nancyConventions)
-		{
-			base.ConfigureConventions(nancyConventions);
-
-			nancyConventions.StaticContentsConventions.Add((context, path) =>
-			{
-				StaticContentConventionBuilder.AddDirectory("/Content/js/templates/", "/Content/js/templates/", new[] { "mustache" });
-
-				return null;
-			});
-		}
 	}
 }
