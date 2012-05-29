@@ -17,7 +17,7 @@ namespace DPath.Models.Helpers
 			{
 				Id = doc.Id,
 				UserName = doc.UserName,
-				Email = doc.UserName
+				Email = doc.Email
 			};
 		}
 	}
