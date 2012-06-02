@@ -56,10 +56,11 @@ namespace DPath.Tasks
             path.LastUpdated = DateTime.UtcNow;
             goal.Achievements.Add(achievement);
 
-            session.Store(goal);
+            //session.Store(goal);
             session.Store(path);
 
             return new { Achievement = achievement, Goal = goal };
         }
-    }
+
+	}
 }

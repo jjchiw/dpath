@@ -38,17 +38,9 @@
 						@if (Model.IsLoggedIn)
 	  {
 							
-							<a href="#" id="show-on-course-link-@m.Id">on course</a>
+							<a href="#" id="add-on-course-link-@m.Id">on course</a>
 	  }
 					</strong>
-						@if (Model.IsLoggedIn)
-	  {
-							
-							<div id="add-on-course-div-@m.Id" class="dynamic-form-goal hidden">
-								<textarea rows="5" cols="10" placeholder="Because I..." id="dynamic-comment-on-course-goal-@m.Id"></textarea>
-								<a id="add-on-course-link-@m.Id" class="btn btn-primary" href="">Ok</a>
-							</div>
-	  }
 				</div>
 				<div class="alert alert-error path-count">
 					<strong>
@@ -56,17 +48,9 @@
 					@if (Model.IsLoggedIn)
 	 {
 							
-							<a href="#" id="show-astray-link-@m.Id">astray</a>
+							<a href="#" id="add-astray-link-@m.Id">astray</a>
 	 }
 					</strong>
-						@if (Model.IsLoggedIn)
-	  {
-							
-							<div id="add-astray-div-@m.Id" class="dynamic-form-goal hidden">
-								<textarea rows="5" cols="10" placeholder="Because I..." id="dynamic-comment-astray-goal-@m.Id"></textarea>
-								<a id="add-astray-link-@m.Id" class="btn btn-primary" href="">Ok</a>
-							</div>
-	  }
 				</div>
 				<div class="row inner-path-row">
 					<div class="span1">
@@ -100,7 +84,7 @@
 											</div>
 										</div>
 										<div class="row">
-											<div class="span10">
+											<div class="span10" >
 												<p>@lastOnCourse.Comment</p>
 											</div>
 										</div>
@@ -123,6 +107,7 @@
 										</div>
 										<div class="row">
 											<div class="span10">
+												
 											</div>
 										</div>
 									</div>

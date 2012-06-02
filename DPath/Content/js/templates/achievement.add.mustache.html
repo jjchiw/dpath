@@ -2,6 +2,7 @@
 	<div class="row-fluid">
 		<div class="span2">
 			<img src="{{GravatarUrl}}" />
+			<input type="hidden" id="achievement-{{Id}}-goal-id" ></input>
 		</div>
 		<div class="span10">
 			<div class="row">
@@ -14,7 +15,15 @@
 			</div>
 			<div class="row">
 				<div class="span10">
-					<p>{{Comment}}</p>
+					<div id="add-comment-{{Id}}">
+						<div class="control-group">
+							<textarea rows="5" cols="12" placeholder="Because I..." id="dynamic-comment-{{Id}}"></textarea>
+						</div>
+						<div class="form-actions">
+							<a id="add-comment-link-{{Id}}" class="btn btn-primary" href="">ok</a>
+							<a id="dismis-comment-link-{{Id}}" class="btn" href="">dismiss</a>
+						</div>
+					</div>
 				</div>
 			</div>
 

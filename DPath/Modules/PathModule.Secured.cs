@@ -51,9 +51,6 @@ namespace DPath.Modules
 				if (path == null)
 					return new Response { StatusCode = HttpStatusCode.NotFound };
 
-				if (path == null)
-					return Response.AsJson(new { }, HttpStatusCode.NotFound);
-
 				var goal = new Goal
 				{
 					Id = Guid.NewGuid().ToString(),
@@ -85,6 +82,26 @@ namespace DPath.Modules
 
 				return Response.AsJson(new { AchievementView = achievementView, AstrayCount = astrayCount, OnCourseCount = onCourseCount });
 
+			};
+
+			Post["/{id}/goal/{goalId}/achievement/{achievementId}"] = parameters =>
+			{
+				Path path = PathTasks.GetPath(this, parameters as DynamicDictionary, RavenSession);
+				if (path == null)
+					return new Response { StatusCode = HttpStatusCode.NotFound };
+
+				Goal goal = path.Goals.SingleOrDefault(x => x.Id == parameters.goalId.Value as string);
+
+				var achievement = goal.Achievements.SingleOrDefault(x => x.Id == parameters.achievementId);
+
+				if (achievement == null)
+					return Response.AsJson(new {}, HttpStatusCode.NotFound);
+
+				achievement.Comment = Request.Form.comment;
+
+				RavenSession.Store(path);
+
+				return Response.AsJson(new { Achievement = achievement.ConverToAchievementView() }, HttpStatusCode.OK);
 			};
 
 			Get["/my-paths"] = _ =>
