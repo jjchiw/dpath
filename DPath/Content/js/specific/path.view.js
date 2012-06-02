@@ -60,6 +60,8 @@
 	Link to add an achievement as astray
 	*/
 	$('a[id^="add-astray-link-"]').live("click", function () {
+		$('div[id^="add-comment-"]').remove();
+
 		var goalId = $(this).attr("id").replace("add-astray-link-", "");
 
 		postAchievement(goalId, "", "astray", "");
@@ -71,6 +73,8 @@
 	Link to add an achievement as on course
 	*/
 	$('a[id^="add-on-course-link-"]').live("click", function () {
+		$('div[id^="add-comment-"]').remove();
+
 		var goalId = $(this).attr("id").replace("add-on-course-link-", "");
 
 		postAchievement(goalId, "", "oncourse", "");
@@ -160,6 +164,10 @@
 				var achievementId = textArea.id.replace("dynamic-comment-", "");
 				postAchievementComment(achievementId, textArea.value);
 			}
+		}
+		//ESC
+		if (e.keyCode == 27) {
+			$('div[id^="add-comment-"]').remove();
 		}
 	});
 
