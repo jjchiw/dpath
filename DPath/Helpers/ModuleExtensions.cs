@@ -64,7 +64,7 @@ namespace DPath.Helpers
 				LastUpdated = path.LastUpdated,
 				PrettyLastUpdatedDate = path.LastUpdated.FriendlyParse(),
 				UserName = path.User.UserName,
-				TotalUsersInPath = path.Goals.Sum(x => x.Achievements.Select(y => y.User.Email).Distinct().Count())
+				TotalUsersInPath = path.Goals.SelectMany(x => x.Achievements).Select(y => y.User.Email).Distinct().Count()
 			};
 		}
 
