@@ -90,14 +90,14 @@ namespace DPath.Helpers
 			};
 		}
 
-		public static AchievementView ConverToAchievementView(this Achievement achievement, int gravatarSize = 40)
+		public static AchievementView ConverToAchievementView(this Achievement achievement, int gravatarSize = 40, bool convertMarkdown = false)
 		{
 			var md = new MarkdownDeep.Markdown();
 
 			return new AchievementView
 			{
 				Id = achievement.Id,
-				Comment = md.Transform(achievement.Comment),
+				Comment = (convertMarkdown ? md.Transform(achievement.Comment) : achievement.Comment),
 				DateCreated = achievement.DateCreated,
 				UserName = achievement.User.UserName,
 				GravatarUrl = achievement.User.Email.ToGravatarUrl(gravatarSize),

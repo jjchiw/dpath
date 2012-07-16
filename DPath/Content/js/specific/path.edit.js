@@ -111,7 +111,7 @@
 
 		//set place holder
 		$("#path-edit-name-text").val(pathName);
-		$("#path-edit-description-text").val(pathDescription);
+		//$("#path-edit-description-text").val(pathDescription);
 		$("#path-edit-name-text").focus();
 
 		return false;

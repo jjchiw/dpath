@@ -69,7 +69,7 @@ namespace DPath.Modules
 
 		private IEnumerable<AchievementView> SortAchievements(IEnumerable<Achievement> achievements, int fromValue)
 		{
-			return achievements	.Select(x => x.ConverToAchievementView(40))
+			return achievements	.Select(x => x.ConverToAchievementView(40, true))
 								.OrderByDescending(x => x.DateCreated)
 								.Skip(fromValue * 20)
 								.Take(20);
