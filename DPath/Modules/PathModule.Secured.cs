@@ -110,7 +110,8 @@ namespace DPath.Modules
 				var userId = (Context.CurrentUser as User).Id;
 
 				var pathsWithCustomer = RavenSession.Advanced.LuceneQuery<Path>()
-														.Where(string.Format("SubscribedUsers:({0})", userId));
+														.Where(string.Format("SubscribedUsers:({0})", userId))
+														.OrderByDescending(x => x.DateCreated);
 
 				var results = new List<PathView>(); // Prepare our results list
 				foreach (var path in pathsWithCustomer)
