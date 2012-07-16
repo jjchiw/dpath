@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+
+	var markdown = new MarkdownDeep.Markdown();
+
 	$("#add-goal").click(function () {
 		var url = "/" + $("#path-id").val() + "/add-goal";
 		var addGoalButton = $(this)
@@ -6,8 +9,8 @@
 		addGoalButton.val("saving");
 
 		$.post(url, { "name": $("#goal-name").val() }, function (data) {
-		
-		
+
+
 			//data is the path object
 			$.get("/Content/js/templates/goal.add.mustache.html", function (template) {
 				var template = Mustache.render(template, data);
@@ -135,10 +138,12 @@
 		var newName = $("#path-edit-name-text").val();
 		var newDescription = $("#path-edit-description-text").val();
 
+		$("#path-description").html("");
+
 		$.post(url, { Name: newName, Description: newDescription }, function (data, status) {
 
 			$("#path-name").text(newName);
-			$("#path-description").text(newDescription);
+			$("#path-description").html(markdown.Transform(newDescription));
 			$("#path-cancel-button").click();
 		});
 

@@ -25,7 +25,7 @@
 		<h5>
 			by @Model.Path.UserName
 		</h5>
-		<p id="path-description">@Html.Markdown(Model.Path.Description as string)</p>
+		<div id="path-description">@Html.Markdown(Model.Path.Description as string)</div>
 	</div>
 
 	 <div id="path-edit-div" class="hidden">
@@ -78,6 +78,7 @@
 </div>
 
 @section PageScript {
+	<script type="text/javascript" src="/Content/js/libs/markdowndeep/MarkdownDeepLib.min.js"></script>
 	<script type="text/javascript" src="/Content/js/libs/mustache.js"></script>
 	<script type="text/javascript" src="/Content/js/libs/jquery-ui-1.8.19.custom.min.js"></script>
 	<script type="text/javascript" src="/Content/js/specific/path.edit.js"></script>
