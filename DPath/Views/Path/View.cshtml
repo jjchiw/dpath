@@ -7,13 +7,30 @@
 	Layout = "Views/Shared/Layout.cshtml";
 }
 
+<ul class="breadcrumb">
+<li>
+@if (!Model.MemberOf)
+{
+	<a href="/">All Paths</a> <span class="divider">/</span>
+}
+else
+{
+	<a href="/paths/my-paths">My Paths</a> <span class="divider">/</span>
+}
+	
+</li>
+<li>
+	@Model.Path.Name
+</li>
+</ul>
+
 <div class="path-hero-unit">
 	<h5>
 	@if (Model.IsOwner)
-	{
+ {
 		<a id="path-delete" href="#" class="btn btn-danger"><i class="icon-trash"></i> Delete</a>
 		<a href="/@Model.Path.Id/edit" class="btn"><i class="icon-pencil"></i> Edit</a>
-	}
+ }
 	</h5>
 	<h1>
 		@Model.Path.Name
@@ -63,8 +80,8 @@
 				<div class="row inner-path-row">
 				
 					@{
-	  var lastAstray = @m.Achievements.OrderByDescending(x => x.DateCreated).FirstOrDefault(x => x.Resolution == DPath.Models.Resolution.Astray.ToString());
-	  var lastOnCourse = @m.Achievements.OrderByDescending(x => x.DateCreated).FirstOrDefault(x => x.Resolution == DPath.Models.Resolution.OnCourse.ToString());
+	 var lastAstray = @m.Achievements.OrderByDescending(x => x.DateCreated).FirstOrDefault(x => x.Resolution == DPath.Models.Resolution.Astray.ToString());
+	 var lastOnCourse = @m.Achievements.OrderByDescending(x => x.DateCreated).FirstOrDefault(x => x.Resolution == DPath.Models.Resolution.OnCourse.ToString());
 
 						<div id="last-oncourse-@m.Id" class="span4">
 						@if (@lastOnCourse != null)

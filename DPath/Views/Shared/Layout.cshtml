@@ -47,7 +47,7 @@
           <a class="brand" href="#">D. Path</a>
           <div class="nav-collapse">
             <ul class="nav">
-			  <li class="@Model.HomeActive"><a href="/">Home</a></li>
+			  <li class="@Model.HomeActive"><a href="/">All Paths</a></li>
 			  @if (Model.IsLoggedIn) 
 			  {
 				<li class="@Model.NewPathActive"><a href="/paths/create">New Path</a></li>
@@ -81,11 +81,11 @@
 
     <div id="container" class="container">
 		@if (!Model.IsLoggedIn)
-		{ 
+  { 
 		<div class="alert alert-info">
 			Log in to view your paths and to follow any path of your interest.
 		</div>
-		}
+  }
 		    
 
 		@RenderBody()

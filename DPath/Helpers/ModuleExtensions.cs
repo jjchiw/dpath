@@ -29,6 +29,11 @@ namespace DPath.Helpers
 			return (context == null || context.CurrentUser == null) ? string.Empty : (context.CurrentUser as User).Email;
 		}
 
+		public static string UserRavenIdString(this NancyContext context)
+		{
+			return (context == null || context.CurrentUser == null) ? string.Empty : (context.CurrentUser as User).Id;
+		}
+
 		public static string UserGravatarUrl(this NancyContext context)
 		{
 			return (context == null || context.CurrentUser == null) ? string.Empty : (context.CurrentUser as User).Email.ToGravatarUrl();

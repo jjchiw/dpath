@@ -25,7 +25,13 @@ namespace DPath.Modules
 				var m = Context.Model(path.Name);
 				m.Path = path.ConvertToPathView();
 				m.IsOwner = path.User.Email == Context.UserEmail();
-				m.HomeActive = "active";
+				m.MemberOf = path.SubscribedUsers.Contains(Context.UserRavenIdString());
+				
+				if (!m.MemberOf)
+					m.HomeActive = "active";
+				else
+					m.MyPathsActive = "active";
+
 				return View["Path/View", m];
 			};
 
