@@ -48,14 +48,17 @@
           <div class="nav-collapse">
             <ul class="nav">
 			  <li class="@Model.HomeActive"><a href="/">Home</a></li>
-              <li class="@Model.NewPathActive"><a href="/paths/create">New Path</a></li>
-              <li class="@Model.MyPathsActive"><a href="/paths/my-paths">My Paths</a></li>
+			  @if (Model.IsLoggedIn) 
+			  {
+				<li class="@Model.NewPathActive"><a href="/paths/create">New Path</a></li>
+				<li class="@Model.MyPathsActive"><a href="/paths/my-paths">My Paths</a></li> 
+			  }
               <li class="@Model.AboutActive"><a href="/about">About</a></li>
             </ul>
 
 			<div id="login" class="@loginCssClass pull-right loggedin">
 				<ul class="nav secondary-nav">
-					<li><a href="#login">Login</a></li>
+					<li><a href="#login">Log In</a></li>
 				</ul>
 			</div>
 
@@ -77,6 +80,14 @@
     </div>
 
     <div id="container" class="container">
+		@if (!Model.IsLoggedIn)
+		{ 
+		<div class="alert alert-info">
+			Log in to view your paths and to follow any path of your interest.
+		</div>
+		}
+		    
+
 		@RenderBody()
      
 
