@@ -1,5 +1,6 @@
 ﻿@using DPath.Models.ViewModels
 @using System.Linq;
+@using DanTup.Web
 
 
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
@@ -38,7 +39,7 @@ else
 	<h5>
 		by @Model.Path.UserName
 	</h5>
-	<p>@Model.Path.Description</p>
+	<p>@Html.Markdown(Model.Path.Description as string)</p>
 </div>
 
 <form>
@@ -102,7 +103,7 @@ else
 										</div>
 										<div class="row">
 											<div class="span10" >
-												<p>@lastOnCourse.Comment</p>
+												<p>@Html.Markdown(lastOnCourse.Comment)</p>
 											</div>
 										</div>
 									</div>
@@ -152,7 +153,7 @@ else
 										</div>
 										<div class="row">
 											<div class="span10">
-												<p>@lastAstray.Comment</p>
+												<p>@Html.Markdown(lastAstray.Comment)</p>
 											</div>
 										</div>
 									</div>
@@ -190,6 +191,7 @@ else
 }
 </form>
 @section PageScript {
+	<script type="text/javascript" src="/Content/js/libs/markdowndeep/MarkdownDeepLib.min.js"></script>
 	<script src="/Content/js/libs/mustache.js"></script>
     <script type="text/javascript" src="/Content/js/specific/path.view.js"></script>
     <script type="text/javascript" src="/Content/js/specific/path.js"></script>

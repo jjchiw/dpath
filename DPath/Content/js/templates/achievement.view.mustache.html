@@ -4,38 +4,6 @@
 		<h1>{{#m}}{{#Goal}}{{Name}}{{/Goal}}{{/m}}</h1>
 	</div>
 	<div class="modal-body">
-		{{#m}}
-		{{#LoggedIn}}
-		<!--<div class="row-fluid">-->
-			<div class="row-fluid">
-				<div class="clearfix" id="oncourse-form">
-					<div class="input">
-						<textarea id="comment-{{#m}}{{#Goal}}{{Id}}{{/Goal}}{{/m}}" name="Comment" rows="4" maxlength="256" placeholder="This time I..." class="resolution"></textarea>
-					</div>
-					<div class="pull-right">
-						<div class="btn-group">
-							<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-								and that's why I am
-								<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="#" id="add-oncourse-{{#m}}{{#Goal}}{{Id}}{{/Goal}}{{/m}}">on course</a>
-								</li>
-								<li>
-									<a href="#" id="add-astray-{{#m}}{{#Goal}}{{Id}}{{/Goal}}{{/m}}">astray</a>
-								</li>
-							</ul>
-							
-						</div>
-					</div>
-					<div class="pull-right">
-						<pre id="counter" class="counter">255</pre>
-					</div>
-				</div>
-			</div>
-		{{/LoggedIn}}
-		{{/m}}
 			<div class="row-fluid">
 				<ul class="nav nav-tabs" id="tab-achievements">
 					<li class="active">
@@ -77,7 +45,7 @@
 										</div>
 										<div class="row">
 											<div class="span10">
-												<p>{{Comment}}</p>
+												<p>{{& Comment}}</p>
 											</div>
 										</div>
 
@@ -108,7 +76,7 @@
 										</div>
 										<div class="row">
 											<div class="span10">
-												<p>{{Comment}}</p>
+												<p>{{& Comment}}</p>
 											</div>
 										</div>
 
@@ -139,7 +107,7 @@
 										</div>
 										<div class="row">
 											<div class="span10">
-												<p>{{Comment}}</p>
+												<p>{{& Comment}}</p>
 											</div>
 										</div>
 
@@ -170,7 +138,7 @@
 									</div>
 									<div class="row">
 										<div class="span10">
-											<p>{{Comment}}</p>
+											<p>{{& Comment}}</p>
 										</div>
 									</div>
 

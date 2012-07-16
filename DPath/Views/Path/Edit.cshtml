@@ -1,10 +1,19 @@
 ﻿@using DPath.Models.ViewModels
+@using DanTup.Web
 
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 @{
 	Layout = "Views/Shared/Layout.cshtml";
 }
 
+<ul class="breadcrumb">
+<li>
+	<a href="/paths/my-paths">My Paths</a> <span class="divider">/</span>
+</li>
+<li>
+	@Model.Path.Name
+</li>
+</ul>
 
 <div class="path-hero-unit">
 	<div id="path-information">
@@ -16,7 +25,7 @@
 		<h5>
 			by @Model.Path.UserName
 		</h5>
-		<p id="path-description">@Model.Path.Description</p>
+		<p id="path-description">@Html.Markdown(Model.Path.Description as string)</p>
 	</div>
 
 	 <div id="path-edit-div" class="hidden">

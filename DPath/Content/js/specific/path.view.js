@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
 
+	var markdown = new MarkdownDeep.Markdown();
+
 	var postAchievement = function (goalId, comment, resolution, commentTemplateName) {
 		var url = "/" + $("#path-id").val() + "/goal/" + goalId + "/" + resolution;
 
@@ -35,7 +37,7 @@
 		var url = "/" + $("#path-id").val() + "/goal/" + goalId + "/achievement/" + achievementId;
 
 		$.post(url, { "comment": comment }, function (data) {
-			$("#add-comment-" + achievementId).html("<p>" + comment + "</p>");
+			$("#add-comment-" + achievementId).html("<p>" + markdown.Transform(comment) + "</p>");
 		});
 	};
 
@@ -60,7 +62,7 @@
 	Link to add an achievement as astray
 	*/
 	$('a[id^="add-astray-link-"]').live("click", function () {
-		$('div[id^="add-comment-"]').remove();
+		//$('div[id^="add-comment-"]').remove();
 
 		var goalId = $(this).attr("id").replace("add-astray-link-", "");
 
@@ -73,7 +75,7 @@
 	Link to add an achievement as on course
 	*/
 	$('a[id^="add-on-course-link-"]').live("click", function () {
-		$('div[id^="add-comment-"]').remove();
+		//$('div[id^="add-comment-"]').remove();
 
 		var goalId = $(this).attr("id").replace("add-on-course-link-", "");
 
@@ -81,8 +83,6 @@
 
 		return false;
 	});
-
-
 
 	$('a[id^="view-goal"]').click(function () {
 		var goalId = $(this).attr("id").replace("view-goal-", "");
