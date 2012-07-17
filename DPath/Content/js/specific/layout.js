@@ -15,6 +15,12 @@ function gotVerifiedEmail(assertion) {
 			data: { assertion: assertion },
 			success: function (res, status, xhr) {
 				if (res != null) {
+					if (location.search.indexOf("?returnUrl=") > -1) {
+						var returnUrl = location.search.replace("?returnUrl=", "")
+						location = location.protocol + "//" + location.host + returnUrl
+
+						return;
+					}
 					location.reload();
 					//loggedIn(res.email);
 				}
