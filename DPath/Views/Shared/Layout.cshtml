@@ -95,6 +95,7 @@
 
       <footer>
         <p>&copy; La Calabaza @DateTime.Now.Year</p>
+		<p>Proudly hosted by <a href="http://appharbor.com">AppHarbor</a>.</p>
       </footer>
 
     </div> <!-- /container -->
@@ -105,12 +106,13 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script>		window.jQuery || document.write('<script src="/Content/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 
+	<script src="/Content/js/libs/jquery.blockui.min.js"></script>
 	<script src="/Content/js/libs/bootstrap/transition.js"></script>
 	<script src="/Content/js/libs/bootstrap/collapse.js"></script>
 	<script src="/Content/js/libs/bootstrap/dropdown.js"></script>
 	<script src="/Content/js/script.js"></script>
 	<script>
-		var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+		var _gaq = [['_setAccount', 'UA-33461191-1'], ['_trackPageview']];
 		(function (d, t) {
 			var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
 			g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
@@ -127,6 +129,7 @@
 		}
 
 		$('#login').click(function () {
+			$.blockUI({ message: '<h1><img src="/Content/img/busy.gif" /> Just a moment...</h1>' }); 
 			navigator.id.getVerifiedEmail(gotVerifiedEmail);
 		});
 
@@ -148,6 +151,7 @@
 </script>
 
 @RenderSection("PageScript", false)
+
 
 </body>
 </html>

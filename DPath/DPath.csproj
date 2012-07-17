@@ -107,10 +107,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\img\busy.gif" />
     <Content Include="Content\img\calabaza.png" />
     <Content Include="Content\img\glyphicons-halflings-white.png" />
     <Content Include="Content\img\glyphicons-halflings.png" />
     <Content Include="Content\js\libs\jquery-ui-1.8.19.custom.min.js" />
+    <Content Include="Content\js\libs\jquery.blockui.min.js" />
     <Content Include="Content\js\libs\less-1.3.0.min.js" />
     <Content Include="Content\js\libs\markdowndeep\MarkdownDeep License.txt" />
     <Content Include="Content\js\libs\markdowndeep\MarkdownDeep Quick Reference.txt" />
