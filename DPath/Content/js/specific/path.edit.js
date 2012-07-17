@@ -2,7 +2,7 @@
 
 	var markdown = new MarkdownDeep.Markdown();
 
-	$("#add-goal").click(function () {
+	var addgoal = function () {
 		var url = "/" + $("#path-id").val() + "/add-goal";
 		var addGoalButton = $(this)
 		addGoalButton.addClass("disabled");
@@ -10,7 +10,7 @@
 
 		$.post(url, { "name": $("#goal-name").val() }, function (data) {
 
-			if(typeof data != "object"){
+			if (typeof data != "object") {
 				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
 				return;
 			}
@@ -26,6 +26,10 @@
 				addGoalButton.val("add goal");
 			});
 		});
+	}
+
+	$("#add-goal").click(function () {
+		addgoal();
 	});
 
 
@@ -51,7 +55,7 @@
 		var liToRemove = $(this).parent();
 
 		$.post(url, { goalId: goalId }, function (data, status) {
-			if(typeof data != "object"){
+			if (typeof data != "object") {
 				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
 				return;
 			}
@@ -97,8 +101,8 @@
 		var url = "/" + $("#path-id").val() + "/goal/" + goalId + "/update-name";
 
 		$.post(url, { Name: newName }, function (data, status) {
-			
-			if(typeof data != "object"){
+
+			if (typeof data != "object") {
 				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
 				return;
 			}
@@ -155,7 +159,7 @@
 
 		$.post(url, { Name: newName, Description: newDescription }, function (data, status) {
 
-			if(typeof data != "object"){
+			if (typeof data != "object") {
 				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
 				return;
 			}
@@ -175,7 +179,7 @@
 			"description": $("#path-description").val()
 		}, function (data) {
 
-			if(typeof data != "object"){
+			if (typeof data != "object") {
 				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
 				return;
 			}
@@ -187,5 +191,15 @@
 
 
 		});
+	});
+
+
+	$(document).keypress(function (e) {
+		if (e.keyCode == 13) {
+			var textAreas = $('input[id^="goal-name"]:focus');
+			if (textAreas.length > 0) {
+				addgoal();
+			}
+		}
 	});
 });
