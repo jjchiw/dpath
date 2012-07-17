@@ -6,6 +6,12 @@
 		var url = "/" + $("#path-id").val() + "/goal/" + goalId + "/" + resolution;
 
 		$.post(url, { "comment": comment }, function (data) {
+
+			if(typeof data != "object"){
+				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
+				return;
+			}
+
 			//data is the AchievementView object
 			$.get("/Content/js/templates/achievement.add.mustache.html", function (template) {
 				var achievement = Mustache.render(template, data.AchievementView);
@@ -37,6 +43,12 @@
 		var url = "/" + $("#path-id").val() + "/goal/" + goalId + "/achievement/" + achievementId;
 
 		$.post(url, { "comment": comment }, function (data) {
+
+			if(typeof data != "object"){
+				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
+				return;
+			}
+
 			$("#add-comment-" + achievementId).html("<p>" + markdown.Transform(comment) + "</p>");
 		});
 	};

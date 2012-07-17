@@ -10,6 +10,10 @@
 
 		$.post(url, { "name": $("#goal-name").val() }, function (data) {
 
+			if(typeof data != "object"){
+				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
+				return;
+			}
 
 			//data is the path object
 			$.get("/Content/js/templates/goal.add.mustache.html", function (template) {
@@ -47,6 +51,10 @@
 		var liToRemove = $(this).parent();
 
 		$.post(url, { goalId: goalId }, function (data, status) {
+			if(typeof data != "object"){
+				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
+				return;
+			}
 			liToRemove.remove();
 		});
 
@@ -89,6 +97,11 @@
 		var url = "/" + $("#path-id").val() + "/goal/" + goalId + "/update-name";
 
 		$.post(url, { Name: newName }, function (data, status) {
+			
+			if(typeof data != "object"){
+				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
+				return;
+			}
 
 			$("#goal-name-" + goalId).text(newName);
 			$("#goal-cancel-button-" + goalId).click();
@@ -142,6 +155,11 @@
 
 		$.post(url, { Name: newName, Description: newDescription }, function (data, status) {
 
+			if(typeof data != "object"){
+				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
+				return;
+			}
+
 			$("#path-name").text(newName);
 			$("#path-description").html(markdown.Transform(newDescription));
 			$("#path-cancel-button").click();
@@ -156,6 +174,11 @@
 		$.post(url, { "name": $("#path-name").val(),
 			"description": $("#path-description").val()
 		}, function (data) {
+
+			if(typeof data != "object"){
+				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
+				return;
+			}
 			//data is the path object
 			$("#goals").toggle();
 			$("#path-form").toggle();

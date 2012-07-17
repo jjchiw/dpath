@@ -55,7 +55,6 @@ namespace DPath.Modules
 				var m = Context.Model("Edit User");
 				return Response.AsJson(new { m });
 			};
-
 		}
 	}
 }

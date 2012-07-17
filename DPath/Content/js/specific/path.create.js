@@ -4,6 +4,11 @@
 			"description": $("#path-description").val()
 		}, function (data) {
 			//data is the path object
+			if(typeof data != "object"){
+				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
+				return;
+			}
+
 			$("#path-id").val(data.id);
 			window.location = "/" + data.id + "/edit";
 
@@ -16,6 +21,12 @@
 		$(this).val("saving");
 
 		$.post(url, { "name": $("#goal-name").val() }, function (data) {
+
+			if(typeof data != "object"){
+				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
+				return;
+			}
+
 			//data is the path object
 			$.get("/Content/js/templates/goal.add.mustache.html", function (template) {
 				var template = Mustache.render(template, data);

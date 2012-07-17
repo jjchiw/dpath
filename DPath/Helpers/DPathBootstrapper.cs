@@ -87,9 +87,7 @@ namespace DPath.Helpers
 					RedirectUrl = "/",
 					UserMapper = requestContainer.Resolve<IUserMapper>(),
 				};
-
 			FormsAuthentication.Enable(pipelines, formsAuthConfiguration);
-
 		}
 	}
 }
