@@ -17,11 +17,13 @@ namespace DPath.Models.ViewModels
 			get
 			{
 				if(Resolution == DPath.Models.Resolution.Astray.ToString())
-					return "alert alert-error";
-				return "alert alert-success";
+					return "achievement-alert alert-error";
+				return "achievement-alert alert-success";
 			}
 		}
 		public DateTime DateCreated { get; set; }
 		public string PrettyDate {get; set;}
+
+		public bool IsOnCourse { get; set; }
 	}
 }

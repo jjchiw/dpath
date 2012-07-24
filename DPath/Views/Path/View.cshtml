@@ -1,200 +1,101 @@
 ﻿@using DPath.Models.ViewModels
 @using System.Linq;
 @using DanTup.Web
-
-
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 @{
-	Layout = "Views/Shared/Layout.cshtml";
+    Layout = "Views/Shared/Layout.cshtml";
 }
-
 <ul class="breadcrumb">
-<li>
-@if (!Model.MemberOf)
-{
-	<a href="/">All Paths</a> <span class="divider">/</span>
-}
-else
-{
-	<a href="/paths/my-paths">My Paths</a> <span class="divider">/</span>
-}
-	
-</li>
-<li>
-	@Model.Path.Name
-</li>
+    <li>
+        @if (!Model.MemberOf)
+        {
+            <a href="/">All Paths</a> <span class="divider">/</span>
+        }
+        else
+        {
+            <a href="/paths/my-paths">My Paths</a> <span class="divider">/</span>
+        }
+    </li>
+    <li>
+        @Model.Path.Name
+    </li>
 </ul>
-
 <div class="path-hero-unit">
-	<h5>
-	@if (Model.IsOwner)
- {
-		<a id="path-delete" href="#" class="btn btn-danger"><i class="icon-trash"></i> Delete</a>
-		<a href="/@Model.Path.Id/edit" class="btn"><i class="icon-pencil"></i> Edit</a>
- }
-	</h5>
-	<h1>
-		@Model.Path.Name
-	</h1>
-	<h5>
-		by @Model.Path.UserName
-	</h5>
-	<p>@Html.Markdown(Model.Path.Description as string)</p>
+    <h5>
+        @if (Model.IsOwner)
+        {
+            <a id="path-delete" href="#" class="btn btn-danger"><i class="icon-trash"></i>Delete</a>
+            <a href="/@Model.Path.Id/edit" class="btn"><i class="icon-pencil"></i>Edit</a>
+        }
+    </h5>
+    <h1>
+        @Model.Path.Name
+    </h1>
+    <h5>
+        by @Model.Path.UserName
+    </h5>
+    <p>@Html.Markdown(Model.Path.Description as string)</p>
 </div>
-
 <form>
 <input type="hidden" id="path-id" value="@Model.Path.Id" />
-@foreach (GoalView m in Model.Path.Goals)
-{
-	
-	<div class="row path">
-		<div class="span12">
-			<div class="span2">
-				<div class="alert alert-success path-count">
-					<strong>
-						<span id="on-course-count-@m.Id">@m.Achievements.Count(x => x.Resolution == DPath.Models.Resolution.OnCourse.ToString())</span> 
-						@if (Model.IsLoggedIn)
-	  {
-							
-							<a href="#" id="add-on-course-link-@m.Id">on course</a>
-	  }
-					</strong>
-				</div>
-				<div class="alert alert-error path-count">
-					<strong>
-						<span id="astray-count-@m.Id">@m.Achievements.Count(x => x.Resolution == DPath.Models.Resolution.Astray.ToString())</span>
-					@if (Model.IsLoggedIn)
-	 {
-							
-							<a href="#" id="add-astray-link-@m.Id">astray</a>
-	 }
-					</strong>
-				</div>
-				<div class="row inner-path-row">
-					<div class="span1">
-						<h4>@m.TotalUsersInGoal user(s) in this goal</h4>
-					</div>
-				</div>
-			</div>
-			<div class="span8">
-				<h1><a href="#" id="view-goal-@m.Id">@m.Name</a></h1>
-				<div class="row inner-path-row">
-				
-					@{
-	 var lastAstray = @m.Achievements.OrderByDescending(x => x.DateCreated).FirstOrDefault(x => x.Resolution == DPath.Models.Resolution.Astray.ToString());
-	 var lastOnCourse = @m.Achievements.OrderByDescending(x => x.DateCreated).FirstOrDefault(x => x.Resolution == DPath.Models.Resolution.OnCourse.ToString());
+<div class="row">
+    <div class="span4">
+         <div class="path">
+			<strong>
+				<div  id="on-course-count-0" class="votes alert-success">
+                    @Model.Path.TotalOnCourse
+                </div> 
+			</strong>
+            <strong>
+				<div  id="astray-count-0" class="votes alert-error">
+                   @Model.Path.TotalAstray
+                </div>
+			</strong>
+            <strong><a href="#" id="view-goal-0">All</a></strong>
+            <br />
+            @Model.Path.TotalUsersInPath user(s) in this goal
+        </div>
 
-						<div id="last-oncourse-@m.Id" class="span4">
-						@if (@lastOnCourse != null)
-	  { 
-							<div class="alert alert-success container-fluid">
-								<div class="row-fluid">
-									<div class="span2">
-										<img src="@lastOnCourse.GravatarUrl" />
-									</div>
-									<div class="span10">
-										<div class="row">
-											<div class="span5">
-												@lastOnCourse.UserName
-											</div>
-											<div class="span4">
-												<span class="pull-right">@lastOnCourse.PrettyDate</span>
-											</div>
-										</div>
-										<div class="row">
-											<div class="span10" >
-												<p>@Html.Markdown(lastOnCourse.Comment)</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-	  }
-	  else
-	  {
-							<div class="alert alert-info container-fluid">
-								<div class="row-fluid">
-									<div class="span2">
-									</div>
-									<div class="span10">
-										<div class="row">
-											<div class="span5">
-											</div>
-											<div class="span4">
-											</div>
-										</div>
-										<div class="row">
-											<div class="span10">
-												
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-	  }
-						</div>
-
-						<div id="last-astray-@m.Id" class="span4">
-						@if (@lastAstray != null)
-	  { 
-							<div class="alert alert-error container-fluid">
-								<div class="row-fluid">
-									<div class="span2">
-										<img src="@lastAstray.GravatarUrl" />
-									</div>
-									<div class="span10">
-										<div class="row">
-											<div class="span5">
-												@lastAstray.UserName
-											</div>
-											<div class="span4">
-												<span class="pull-right">@lastAstray.PrettyDate</span>
-											</div>
-										</div>
-										<div class="row">
-											<div class="span10">
-												<p>@Html.Markdown(lastAstray.Comment)</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-	  }
-	  else
-	  {
-							<div class="alert alert-info container-fluid">
-								<div class="row-fluid">
-									<div class="span2">
-									</div>
-									<div class="span10">
-										<div class="row">
-											<div class="span5">
-											</div>
-											<div class="span4">
-											</div>
-										</div>
-										<div class="row">
-											<div class="span10">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-	  }
-						</div>
-					}
-				
-				</div>
-			</div>
-		</div>
-	</div>
-}
+            @foreach (GoalView m in Model.Path.Goals)
+            {
+                <div class="path">
+					<strong>
+						<div id="on-course-count-@m.Id" class="votes alert-success">
+                            @m.Achievements.Count(x => x.Resolution == DPath.Models.Resolution.OnCourse.ToString())
+                            @if (Model.IsLoggedIn)
+	                        {
+							    <a href="#" id="add-on-course-link-@m.Id"><i class="icon-plus-sign"></i></a>
+	                        }
+                        </div> 
+					</strong>
+                    <strong>
+						<div id="astray-count-@m.Id" class="votes alert-error">
+                            @m.Achievements.Count(x => x.Resolution == DPath.Models.Resolution.Astray.ToString())
+                            @if (Model.IsLoggedIn)
+	                        {
+							    <a href="#" id="add-astray-link-@m.Id"><i class="icon-minus-sign"></i></a>
+	                        }
+                        </div>
+					</strong>
+                    <strong><a href="#" id="view-goal-@m.Id">@m.Name</a></strong>
+                    <br />
+                    @m.TotalUsersInGoal user(s) in this goal
+                </div>
+            }
+    </div>
+    <div class="span8" id="achievements-div">
+    </div>
+</div>
 </form>
 @section PageScript {
-	<script type="text/javascript" src="/Content/js/libs/markdowndeep/MarkdownDeepLib.min.js"></script>
-	<script src="/Content/js/libs/mustache.js"></script>
+    <script type="text/javascript" src="/Content/js/libs/markdowndeep/MarkdownDeepLib.min.js"></script>
+    <script src="/Content/js/libs/mustache.js"></script>
     <script type="text/javascript" src="/Content/js/specific/path.view.js"></script>
     <script type="text/javascript" src="/Content/js/specific/path.js"></script>
-	<script type="text/javascript" src="/Content/js/libs/bootstrap/modal.js"></script>
-	<script type="text/javascript" src="/Content/js/libs/bootstrap/tab.js"></script>
+    <script type="text/javascript" src="/Content/js/libs/bootstrap/modal.js"></script>
+    <script type="text/javascript" src="/Content/js/libs/bootstrap/tab.js"></script>
+
+
+
+
 }

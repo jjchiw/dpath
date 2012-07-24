@@ -9,7 +9,7 @@ namespace DPath.Models.ViewModels
 	{
 		public string Id { get; set; }
 		public string Name { get; set; }
-		public int TotalOncourse { get; set; }
+		public int TotalOnCourse { get; set; }
 		public int TotalAstray { get; set; }
 		public List<GoalView> Goals { get; set; }
 

@@ -61,7 +61,7 @@ namespace DPath.Helpers
 				Id = path.Id,
 				Name = path.Name,
 				Description = path.Description,
-				TotalOncourse = path.Goals.Sum(y => y.Achievements.Where(x => x.Resolution == Resolution.OnCourse).Count()),
+				TotalOnCourse = path.Goals.Sum(y => y.Achievements.Where(x => x.Resolution == Resolution.OnCourse).Count()),
 				TotalAstray = path.Goals.Sum(y => y.Achievements.Where(x => x.Resolution == Resolution.Astray).Count()),
 				Goals = path.Goals.OrderBy(x => x.Order).Select(y => y.ConvertToGoalView()).ToList(),
 				DateCreated = path.DateCreated,
@@ -102,6 +102,7 @@ namespace DPath.Helpers
 				UserName = achievement.User.UserName,
 				GravatarUrl = achievement.User.Email.ToGravatarUrl(gravatarSize),
 				Resolution = achievement.Resolution.ToString(),
+				IsOnCourse = achievement.Resolution == Resolution.OnCourse,
 				PrettyDate = achievement.DateCreated.FriendlyParse()
 			};
 		}

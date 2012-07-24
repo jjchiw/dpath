@@ -27,6 +27,7 @@ namespace DPath.Modules
 				m.IsOwner = path.User.Email == Context.UserEmail();
 				m.MemberOf = path.SubscribedUsers.Contains(Context.UserRavenIdString());
 				
+
 				if (!m.MemberOf)
 					m.HomeActive = "active";
 				else
@@ -46,22 +47,28 @@ namespace DPath.Modules
 					return new Response { StatusCode = HttpStatusCode.NotFound };
 
 				var pathView = path.ConvertToPathView();
-				var goal = path.Goals.FirstOrDefault(x => x.Id == parameters.goalId);
-				var goalView = pathView.Goals.FirstOrDefault(x => x.Id == parameters.goalId);
-
 				var m = Context.Model(path.Name);
 				m.LoggedIn = Context.IsLoggedIn();
 				m.Path = new { Name = pathView.Name, Id = pathView.Id };
-				m.Goal = new { Name = goalView.Name, Id = goalView.Id };
-				m.AllAchievements = SortAchievements(goal.Achievements, from);
 
-				if(Context.IsLoggedIn())
-					m.MyAchievements = SortAchievements(goal.Achievements.Where(x => x.User.Email == Context.UserEmail()), from);
+				Goal goal = null;
+				List<Achievement> achievements = null;
+				if (parameters.goalId.Value == "0")
+				{
+					m.Goal = new { Name = "All", Id = 0 };
+					achievements = path.Goals.SelectMany(x => x.Achievements).ToList();
+				}
+				else 
+				{
+					goal = path.Goals.FirstOrDefault(x => x.Id == parameters.goalId);
+					m.Goal = new { Name = goal.Name, Id = goal.Id };
+					achievements = goal.Achievements;
+				}
 
+				m.AllAchievements = SortAchievements(achievements, from);
 
-				m.OnCourseAchievements = SortAchievements(goal.Achievements	.Where(x => x.Resolution == Resolution.OnCourse), from);
-
-				m.AstrayAchievements = SortAchievements(goal.Achievements.Where(x => x.Resolution == Resolution.Astray), from);
+				if (Context.IsLoggedIn())
+					m.MyAchievements = SortAchievements(achievements.Where(x => x.User.Email == Context.UserEmail()), from);
 
 				return Response.AsJson(new { m }, HttpStatusCode.OK);
 			};

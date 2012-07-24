@@ -1,21 +1,91 @@
-﻿<div class="{{CssResolution}} container-fluid">
-	<div class="row-fluid">
-		<div class="span2">
-			<img src="{{GravatarUrl}}" />
-			<input type="hidden" id="achievement-{{Id}}-goal-id" ></input>
-		</div>
-		<div class="span10">
-			<div class="row">
-				<div class="span5">
-					{{UserName}}
-				</div>
-				<div class="span4">
-					<span class="pull-right">{{PrettyDate}}</span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span10">
-					<div id="add-comment-{{Id}}">
+﻿<div class="row">
+    {{#IsOnCourse}}
+    <div class="{{CssResolution}} span4">
+        <div class="row-fluid">
+            <div class="span2">
+                <img src="{{GravatarUrl}}" />
+                <input type="hidden" id="achievement-{{Id}}-goal-id" ></input>
+            </div>
+            <div class="span10">
+                <div class="row">
+                    <div class="span5">
+                        {{UserName}}
+                    </div>
+                    <div class="span5">
+                        <span class="pull-right">{{PrettyDate}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span10">
+                        <div name="add-comment-{{Id}}">
+						    <div class="control-group">
+							    <textarea rows="5" cols="12" placeholder="Because I..." id="dynamic-comment-{{Id}}"></textarea>
+						    </div>
+						    <div class="form-actions">
+							    <a id="add-comment-link-{{Id}}" class="btn btn-primary" href="">ok</a>
+							    <a id="dismis-comment-link-{{Id}}" class="btn" href="">dismiss</a>
+						    </div>
+					    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="achievement-alert alert-info span4">
+        <div class="row-fluid">
+            <div class="span2">
+            </div>
+            <div class="span10">
+                <div class="row">
+                    <div class="span5">
+                    </div>
+                    <div class="span4">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span10">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/IsOnCourse}} {{^IsOnCourse}}
+<div class="achievement-alert alert-info span4">
+    <div class="row-fluid">
+        <div class="span2">
+        </div>
+        <div class="span10">
+            <div class="row">
+                <div class="span5">
+                </div>
+                <div class="span4">
+                </div>
+            </div>
+            <div class="row">
+                <div class="span10">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="{{CssResolution}} span4">
+    <div class="row-fluid">
+        <div class="span2">
+            <img src="{{GravatarUrl}}" />
+            <input type="hidden" id="achievement-{{Id}}-goal-id" ></input>
+        </div>
+        <div class="span10">
+            <div class="row">
+                <div class="span5">
+                    {{UserName}}
+                </div>
+                <div class="span5">
+                    <span class="pull-right">{{PrettyDate}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span10">
+                    <div name="add-comment-{{Id}}">
 						<div class="control-group">
 							<textarea rows="5" cols="12" placeholder="Because I..." id="dynamic-comment-{{Id}}"></textarea>
 						</div>
@@ -24,9 +94,10 @@
 							<a id="dismis-comment-link-{{Id}}" class="btn" href="">dismiss</a>
 						</div>
 					</div>
-				</div>
-			</div>
-
-		</div>
-	</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/IsOnCourse}}
 </div>
