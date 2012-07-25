@@ -213,8 +213,6 @@
 	$('#show-all-stats').live('click', function () {
 		getGoalStats("all-stats");
 
-		<a id="show-my-stats" href="#">my stats</a>
-
 		$("#span-all-stats").html("all stats");
 
 		if($("#span-my-stats").length > 0)
