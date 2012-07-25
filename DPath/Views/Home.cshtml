@@ -1,112 +1,116 @@
 ﻿@using DPath.Models.ViewModels
 @using System.Linq
 @using DanTup.Web
-
-
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 @{
     Layout = "Views/Shared/Layout.cshtml";
 }
-
-
 <ul class="nav nav-tabs" id="tab-achievements">
-	<li class="active">
-		<a href="#recents-paths" data-toggle="tab">Recents Path</a>
-	</li>
-	<li>
-		<a href="#recents-achievements" data-toggle="tab">Recents Achievements</a>
-	</li>
+    <li class="active"><a href="#recents-paths" data-toggle="tab">Recents Path</a> </li>
+    <li><a href="#recents-achievements" data-toggle="tab">Recents Achievements</a> </li>
 </ul>
-
 <div class="tab-content">
-	<div class="tab-pane active" id="recents-paths">
-	@foreach (PathView m in Model.Paths)
-	{
+    <div class="tab-pane active" id="recents-paths">
+        @foreach (PathView m in Model.Paths)
+        {
 		
-		<div class="row path">
-			<div class="span12">
-				<div class="span1">
-					<div class="alert alert-success path-count"><strong>@m.TotalOnCourse</strong></div>
-					<div class="alert alert-error path-count"><strong>@m.TotalAstray</strong></div>
-					<div class="row">
-						<div class="span1">
-							<h4>@m.TotalUsersInPath walking this path</h4>
-						</div>
-					</div>
-				</div>
-				<div class="span8">
-					<h1><a href="/@m.Id">@m.Name</a></h1><h5>by @m.UserName</h5>
-				</div>
-				<div class="row inner-path-row">
-					<div class="span4">
-						<h4>Goals</h4>
-						<ul>
-							@foreach (GoalView g in m.Goals.Take(5))
-							{
-								<li>@g.Name</li>
-							}
-							@if (m.Goals.Count > 5) 
-							{ 
-								<li>...</li>
-							}
-					
-						</ul>
-					</div>
-					<div class="span4">
-						<h4>About</h4>
-						<div class="well"><p>@Html.Markdown(m.Description)</p></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	}
-	</div>
-	<div class="tab-pane" id="recents-achievements">
-		@foreach (PathView m in Model.RecentPaths)
-  {
+            <div class="row path">
+                <div class="span12">
+                    <div class="span1">
+                        <div class="alert alert-success path-count">
+                            <strong>@m.TotalOnCourse</strong></div>
+                        <div class="alert alert-error path-count">
+                            <strong>@m.TotalAstray</strong></div>
+                        <div class="row">
+                            <div class="span1">
+                                <h4>@m.TotalUsersInPath walking this path</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span8">
+                        <h1>
+                            <a href="/@m.Id">@m.Name</a></h1>
+                        <h5>
+                            by @m.UserName</h5>
+                    </div>
+                    <div class="row inner-path-row">
+                        <div class="span4">
+                            <h4>
+                                Goals</h4>
+                            <ul>
+                                @foreach (GoalView g in m.Goals.Take(5))
+                                {
+                                    <li>@g.Name</li>
+                                }
+                                @if (m.Goals.Count > 5)
+                                { 
+                                    <li>...</li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="span4">
+                            <h4>
+                                About</h4>
+                            <div class="well">
+                                <p>@Html.Markdown(m.Description)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="tab-pane" id="recents-achievements">
+        @foreach (PathView m in Model.RecentPaths)
+        {
 		
-		<div class="row path">
-			<div class="span12">
-				<div class="span1">
-					<div class="alert alert-success path-count"><strong>@m.TotalOnCourse</strong></div>
-					<div class="alert alert-error path-count"><strong>@m.TotalAstray</strong></div>
-					<div class="row">
-						<div class="span1">
-							<h4>@m.TotalUsersInPath walking this path</h4>
-						</div>
-					</div>
-				</div>
-				<div class="span8">
-					<h1><a href="/@m.Id">@m.Name</a></h1><h5>by @m.UserName</h5>
-				</div>
-				<div class="row inner-path-row">
-					<div class="span4">
-						<h4>Goals</h4>
-						<ul>
-							@foreach (GoalView g in m.Goals.Take(5))
-		{
-								<li>@g.Name</li>
-		}
-							@if (m.Goals.Count > 5)
-		{ 
-								<li>...</li>
-		}
-					
-						</ul>
-					</div>
-					<div class="span4">
-						<h4>About</h4>
-						<div class="well"><p>@m.Description</p></div>
-					</div>
-				</div>
-			</div>
-		</div>
-  }
-	</div>
+            <div class="row path">
+                <div class="span12">
+                    <div class="span1">
+                        <div class="alert alert-success path-count">
+                            <strong>@m.TotalOnCourse</strong></div>
+                        <div class="alert alert-error path-count">
+                            <strong>@m.TotalAstray</strong></div>
+                        <div class="row">
+                            <div class="span1">
+                                <h4>@m.TotalUsersInPath walking this path</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span8">
+                        <h1>
+                            <a href="/@m.Id">@m.Name</a></h1>
+                        <h5>
+                            by @m.UserName</h5>
+                    </div>
+                    <div class="row inner-path-row">
+                        <div class="span4">
+                            <h4>
+                                Goals</h4>
+                            <ul>
+                                @foreach (GoalView g in m.Goals.Take(5))
+                                {
+                                    <li>@g.Name</li>
+                                }
+                                @if (m.Goals.Count > 5)
+                                { 
+                                    <li>...</li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="span4">
+                            <h4>
+                                About</h4>
+                            <div class="well">
+                                <p>@Html.Markdown(m.Description)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
-
-
-
 @section PageScript {
-	<script type="text/javascript" src="/Content/js/libs/bootstrap/tab.js"></script>
+    <script type="text/javascript" src="/Content/js/libs/bootstrap/tab.js"></script>
 }
