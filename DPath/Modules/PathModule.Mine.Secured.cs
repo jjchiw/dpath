@@ -125,6 +125,33 @@ namespace DPath.Modules
 				return HttpStatusCode.OK;
 
 			};
+
+			Get["/{id}/my-stats"] = parameters =>
+			{
+				var pathId = String.Format("{0}/{1}", this.ModulePath, parameters.id.Value as string);
+				Path path = RavenSession.Load<Path>(pathId);
+				if (path == null)
+					return new Response { StatusCode = HttpStatusCode.NotFound };
+
+
+				var m = path.Goals.Select(x => new
+				{
+					Id = x.Id,
+					Name = x.Name,
+					TOnCourse = x.Achievements.Where(y => y.Resolution == Resolution.OnCourse && y.User.Id == Context.UserRavenIdString()).Count(),
+					TAstray = x.Achievements.Where(y => y.Resolution == Resolution.Astray && y.User.Id == Context.UserRavenIdString()).Count()
+				}).ToList();
+
+				m.Add(new
+				{
+					Id = "0",
+					Name = "0",
+					TOnCourse = path.Goals.Sum(x => x.Achievements.Where(y => y.Resolution == Resolution.OnCourse && y.User.Id == Context.UserRavenIdString()).Count()),
+					TAstray = path.Goals.Sum(x => x.Achievements.Where(y => y.Resolution == Resolution.Astray && y.User.Id == Context.UserRavenIdString()).Count())
+				});
+
+				return Response.AsJson(new { m }, HttpStatusCode.OK);
+			};
 		}
 	}
 }

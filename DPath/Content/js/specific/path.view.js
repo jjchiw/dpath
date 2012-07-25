@@ -2,6 +2,25 @@
 
 	var markdown = new MarkdownDeep.Markdown();
 
+	var getGoalStats = function (segment) {
+		var url = "/" + $("#path-id").val() + "/" + segment;
+
+		$.get(url, function (data) {
+
+			if (typeof data != "object") {
+				location = location.protocol + "//" + location.host + "?returnUrl=" + location.pathname;
+				return;
+			}
+
+			$.each(data.m, function (index, obj) {
+				$("#on-course-count-" + obj.Id + " span").html(obj.TOnCourse);
+				$("#astray-course-count-" + obj.Id + " span").html(obj.TAstray);
+			});
+
+		});
+
+	};
+
 	var postAchievement = function (goalId, comment, resolution, commentTemplateName) {
 		var url = "/" + $("#path-id").val() + "/goal/" + goalId + "/" + resolution;
 
@@ -20,10 +39,10 @@
 				$("#on-course-list").prepend(achievement);
 				if (resolution == "oncourse") {
 					$("#last-oncourse-" + goalId).html(achievement);
-					$("#on-course-count-" + goalId).text(data.OnCourseCount);
+					$("#on-course-count-" + goalId + " span").html(data.OnCourseCount);
 				} else {
 					$("#last-astray-" + goalId).html(achievement);
-					$("#astray-count-" + goalId).text(data.AstrayCount);
+					$("#astray-count-" + goalId + " span").html(data.AstrayCount);
 				}
 
 				$("#achievement-" + data.AchievementView.Id + "-goal-id").val(goalId);
@@ -50,7 +69,7 @@
 			}
 
 
-			$("div[name=add-comment-" + achievementId+"]").each(function (index) {
+			$("div[name=add-comment-" + achievementId + "]").each(function (index) {
 				$(this).html("<p>" + markdown.Transform(comment) + "</p>");
 			});
 		});
@@ -157,10 +176,62 @@
 		return false;
 	});
 
+	/*
+	Link to add an achievement as astray
+	*/
+	$('a[id^="add-inline-astray-link"]').live("click", function () {
+		//$('div[id^="add-comment-"]').remove();
+
+		var goalId = $("#view-goal-id").val();
+
+		postAchievement(goalId, "", "astray", "");
+
+		return false;
+	});
+
+	/*
+	Link to add an achievement as on course
+	*/
+	$('a[id^="add-inline-on-course-link"]').live("click", function () {
+		//$('div[id^="add-comment-"]').remove();
+
+		var goalId = $("#view-goal-id").val();
+
+		postAchievement(goalId, "", "oncourse", "");
+
+		return false;
+	});
+
 	$('a[id^="view-goal"]').click(function () {
 		var goalId = $(this).attr("id").replace("view-goal-", "");
 
 		showGoalAchievements(goalId);
+
+		return false;
+	});
+
+	$('#show-all-stats').live('click', function () {
+		getGoalStats("all-stats");
+
+		<a id="show-my-stats" href="#">my stats</a>
+
+		$("#span-all-stats").html("all stats");
+
+		if($("#span-my-stats").length > 0)
+			$("#span-my-stats").html("<a id='show-my-stats' href='#'>my stats</a></span>");
+		
+
+		return false;
+	});
+
+	$('#show-my-stats').live('click', function () {
+		
+		getGoalStats("my-stats");
+		
+		$("#span-my-stats").html("my stats");
+
+		if($("#span-all-stats").length > 0)
+			$("#span-all-stats").html("<a id='show-all-stats' href='#'>all stats</a></span>");
 
 		return false;
 	});

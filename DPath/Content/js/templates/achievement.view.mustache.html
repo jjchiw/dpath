@@ -1,6 +1,7 @@
 ﻿<div class="row">
    <div class="span8">
     <h1>{{#m}}{{#Goal}}{{Name}}{{/Goal}}{{/m}}</h1>
+    <input type="hidden" id="view-goal-id" value="{{#m}}{{#Goal}}{{Id}}{{/Goal}}{{/m}}"></input>
    </div>
 </div>
 <div class="row">
@@ -12,7 +13,51 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="all">
-            <div id="all-list">
+                {{#m}} {{#AcceptInLineAchievement}}
+                <div id="all-control-inline-list">
+                            <div class="row">
+                    <div class="achievement-alert alert-info span4">
+                        <div class="row-fluid">
+                            <div class="span2">
+                            </div>
+                            <div class="span10">
+                                <div class="row">
+                                    <div class="span5">
+                                    </div>
+                                    <div class="span4">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="span10">
+                                        <a href="#" id="add-inline-on-course-link">add on course</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="achievement-alert alert-info span4">
+                        <div class="row-fluid">
+                            <div class="span2">
+                            </div>
+                            <div class="span10">
+                                <div class="row">
+                                    <div class="span5">
+                                    </div>
+                                    <div class="span4">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="span10">
+                                        <a href="#" id="add-inline-astray-link">add astray</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                {{/AcceptInLineAchievement}}{{/m}} 
+                <div id="all-list">
                 {{#m}} {{#AllAchievements}}
                 <div class="row">
                     {{#IsOnCourse}}
@@ -103,9 +148,54 @@
             </div>
             {{/AllAchievements}} {{/m}}
         </div>
+        </div>
     </div>
     <div class="tab-pane" id="my-resolutions">
-        <div id="my-list">
+    {{#m}} {{#AcceptInLineAchievement}}
+        <div id="my-inline-list">
+          <div class="row">
+                    <div class="achievement-alert alert-info span4">
+                        <div class="row-fluid">
+                            <div class="span2">
+                            </div>
+                            <div class="span10">
+                                <div class="row">
+                                    <div class="span5">
+                                    </div>
+                                    <div class="span4">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="span10">
+                                        add on course
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="achievement-alert alert-info span4">
+                        <div class="row-fluid">
+                            <div class="span2">
+                            </div>
+                            <div class="span10">
+                                <div class="row">
+                                    <div class="span5">
+                                    </div>
+                                    <div class="span4">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="span10">
+                                        add astray
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                    {{/AcceptInLineAchievement}}{{/m}} 
+                    <div id="my-list">
             {{#m}} {{#MyAchievements}}
             <div class="row">
                     {{#IsOnCourse}}
@@ -195,7 +285,7 @@
                 {{/IsOnCourse}}
             </div>
             {{/MyAchievements}} {{/m}}
-        </div>
+            </div>
     </div>
 </div>
 </div> <!--</div>--> 

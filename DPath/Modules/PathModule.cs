@@ -36,6 +36,33 @@ namespace DPath.Modules
 				return View["Path/View", m];
 			};
 
+			Get["/{id}/all-stats"] = parameters =>
+			{
+				var pathId = String.Format("{0}/{1}", this.ModulePath, parameters.id.Value as string);
+				Path path = RavenSession.Load<Path>(pathId);
+				if (path == null)
+					return new Response { StatusCode = HttpStatusCode.NotFound };
+
+
+				var m  = path.Goals.Select(x => new
+				{
+					Id = x.Id,
+					Name = x.Name,
+					TOnCourse = x.Achievements.Where(y => y.Resolution == Resolution.OnCourse).Count(),
+					TAstray = x.Achievements.Where(y => y.Resolution == Resolution.Astray).Count()
+				}).ToList();
+
+				m.Add(new
+				{
+					Id = "0",
+					Name = "0",
+					TOnCourse = path.Goals.Sum(x => x.Achievements.Where(y => y.Resolution == Resolution.OnCourse).Count()),
+					TAstray = path.Goals.Sum(x => x.Achievements.Where(y => y.Resolution == Resolution.Astray).Count())
+				});
+
+				return Response.AsJson(new { m }, HttpStatusCode.OK);
+			};
+
 			Get[@"/{id}/view-goal/{goalId}/(?<from>[\d*])"] = parameters =>
 			{
 				var pathId = String.Format("{0}/{1}", this.ModulePath, parameters.id.Value as string);
@@ -57,6 +84,7 @@ namespace DPath.Modules
 				{
 					m.Goal = new { Name = "All", Id = 0 };
 					achievements = path.Goals.SelectMany(x => x.Achievements).ToList();
+					m.AcceptInLineAchievement = false;
 				}
 				else 
 				{
@@ -68,7 +96,12 @@ namespace DPath.Modules
 				m.AllAchievements = SortAchievements(achievements, from);
 
 				if (Context.IsLoggedIn())
+				{
 					m.MyAchievements = SortAchievements(achievements.Where(x => x.User.Email == Context.UserEmail()), from);
+					if (parameters.goalId.Value != "0")
+					m.AcceptInLineAchievement = true;
+				}
+					
 
 				return Response.AsJson(new { m }, HttpStatusCode.OK);
 			};
