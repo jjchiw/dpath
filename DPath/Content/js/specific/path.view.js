@@ -34,8 +34,11 @@
 			//data is the AchievementView object
 			$.get("/Content/js/templates/achievement.add.mustache.html", function (template) {
 				var achievement = Mustache.render(template, data.AchievementView);
-				$("#all-list").prepend(achievement);
-				$("#my-list").prepend(achievement);
+				if ($("#all.active").length > 0)
+					$("#all-list").prepend(achievement);
+				else
+					$("#my-list").prepend(achievement);
+
 				$("#on-course-list").prepend(achievement);
 				if (resolution == "oncourse") {
 					$("#last-oncourse-" + goalId).html(achievement);
@@ -215,20 +218,20 @@
 
 		$("#span-all-stats").html("all stats");
 
-		if($("#span-my-stats").length > 0)
+		if ($("#span-my-stats").length > 0)
 			$("#span-my-stats").html("<a id='show-my-stats' href='#'>my stats</a></span>");
-		
+
 
 		return false;
 	});
 
 	$('#show-my-stats').live('click', function () {
-		
+
 		getGoalStats("my-stats");
-		
+
 		$("#span-my-stats").html("my stats");
 
-		if($("#span-all-stats").length > 0)
+		if ($("#span-all-stats").length > 0)
 			$("#span-all-stats").html("<a id='show-all-stats' href='#'>all stats</a></span>");
 
 		return false;
