@@ -5,11 +5,11 @@ using System.Web;
 using DPath.Models;
 using Nancy;
 using Raven.Client;
-using Nancy.OData;
 using DPath.Models.ViewModels;
 using DPath.Helpers;
 using Nancy.ModelBinding;
 using DPath.Tasks;
+using Nancy.OData;
 
 namespace DPath.Modules
 {
